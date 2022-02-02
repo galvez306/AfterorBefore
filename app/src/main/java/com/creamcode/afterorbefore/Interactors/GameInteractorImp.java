@@ -5,6 +5,7 @@ import com.creamcode.afterorbefore.Interfaces.GamePresenter;
 
 
 import java.util.ArrayList;
+import java.util.Random;
 
 
 public class GameInteractorImp implements GameInteractor {
@@ -20,6 +21,15 @@ public class GameInteractorImp implements GameInteractor {
         gamePresenter=presenter;
     }
 
+    public String generateTurnType(){
+        Random random = new Random();
+        if(random.nextBoolean()){
+            return "AFTER";
+        }else{
+            return "BEFORE";
+        }
+    }
+
     @Override
     public void getIds() {
         ArrayList<String > ids = new ArrayList<String>();
@@ -30,6 +40,7 @@ public class GameInteractorImp implements GameInteractor {
             }
             ids.add(random);
         }
-        gamePresenter.setIds(ids);
+
+        gamePresenter.setIds(ids, generateTurnType());
     }
 }

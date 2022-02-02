@@ -36,9 +36,10 @@ public class GameActivity extends AppCompatActivity implements GameView, Picture
     GamePresenter gamePresenter;
     PictureFragment pictureFragmentA, pictureFragmentB;
 
+    TextView tv_question;
+
     //
     Button btnCambiar;
-    TextView tv_prueba;
     //
 
 
@@ -46,6 +47,8 @@ public class GameActivity extends AppCompatActivity implements GameView, Picture
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        tv_question = findViewById(R.id.tv_question);
 
         gamePresenter = new GamePresenterImp(this);
         gamePresenter.getIds();
@@ -59,15 +62,14 @@ public class GameActivity extends AppCompatActivity implements GameView, Picture
             }
         });
 
-        tv_prueba = findViewById(R.id.tv_prueba);
-
         //
-
 
     }
 
     @Override
-    public void initializePicturesAB(String idA, String idB) {
+    public void initializePicturesAB(String idA, String idB, String questionType) {
+
+        tv_question.setText(questionType);
 
         pictureFragmentA = new PictureFragment();
         Bundle bundleA = new Bundle();
@@ -84,38 +86,45 @@ public class GameActivity extends AppCompatActivity implements GameView, Picture
 
     }
 
-
+    //this method is called by each fragment by a interface and here its implemented
     @Override
     public void checkAnswer(String id) {
         PictureFragment fragment = (PictureFragment) identifyFragment(id); //checar cual de los dos fragments esta llamando
         fragment.getYear();
+        String type = gamePresenter.getTurnType();
 
-        if(fragment==pictureFragmentA){
-            //se trabaja con A
-                /*if(fragment.getYear()>pictureFragmentB.getYear()){
-                    Toast.makeText(this,"este es mayor",Toast.LENGTH_SHORT).show();
+        if(fragment==pictureFragmentA){//ist fragmentA
+
+            if(type.equals("AFTER")){
+                if(fragment.getYear()<pictureFragmentB.getYear()){
+                    Toast.makeText(this,"este es after",Toast.LENGTH_SHORT).show();
+                    gamePresenter.nextPicture(pictureFragmentA);
                 }else{
-                    Toast.makeText(this,"este es menor",Toast.LENGTH_SHORT).show();
-                }*/
-            //ejemplo si solo nos interesara cual es mayor
-            if(fragment.getYear()>pictureFragmentB.getYear()){
-                Toast.makeText(this,"este es mayor",Toast.LENGTH_SHORT).show();
-                gamePresenter.nextPicture(pictureFragmentA);
-                //presenter-> cambiar este fragment, de todos modos en este punto sabemos que aqui
-                //estamos hablando de pictureFragmentA
-                //presenter.void next picture
-            }
-        }else{
-            //se trabaja con B
-            /*if(fragment.getYear()>pictureFragmentA.getYear()){
-                Toast.makeText(this,"este es mayor",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this,"este es before",Toast.LENGTH_SHORT).show();
+                }
             }else{
-                Toast.makeText(this,"este es menor",Toast.LENGTH_SHORT).show();
-            }*/
-            //ejemplo si solo nos interesara cual es mayor
-            if(fragment.getYear()>pictureFragmentA.getYear()){
-                Toast.makeText(this,"este es mayor",Toast.LENGTH_SHORT).show();
-                gamePresenter.nextPicture(pictureFragmentB);
+                if(fragment.getYear()>pictureFragmentB.getYear()){
+                    Toast.makeText(this,"este es before",Toast.LENGTH_SHORT).show();
+                    gamePresenter.nextPicture(pictureFragmentA);
+                }else{
+                    Toast.makeText(this,"este es after",Toast.LENGTH_SHORT).show();
+                }
+            }
+        }else{//ist fragmentB
+            if(type.equals("AFTER")){
+                if(fragment.getYear()<pictureFragmentA.getYear()){
+                    Toast.makeText(this,"este es after",Toast.LENGTH_SHORT).show();
+                    gamePresenter.nextPicture(pictureFragmentB);
+                }else{
+                    Toast.makeText(this,"este es before",Toast.LENGTH_SHORT).show();
+                }
+            }else{
+                if(fragment.getYear()>pictureFragmentA.getYear()){
+                    Toast.makeText(this,"este es before",Toast.LENGTH_SHORT).show();
+                    gamePresenter.nextPicture(pictureFragmentB);
+                }else{
+                    Toast.makeText(this,"este es after",Toast.LENGTH_SHORT).show();
+                }
             }
         }
 

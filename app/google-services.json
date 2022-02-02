@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "920262743080",
+    "project_id": "after-or-before-5ec45",
+    "storage_bucket": "after-or-before-5ec45.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:920262743080:android:0830b07474728f3ee0911d",
+        "android_client_info": {
+          "package_name": "com.creamcode.afterorbefore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "920262743080-ulstr79h82cijcd7mm5q9q0p0ac74dg2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXX2GGcmfQ8-Kg_tUHXC9nrz2UEx9XUtc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "920262743080-ulstr79h82cijcd7mm5q9q0p0ac74dg2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

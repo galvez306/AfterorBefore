@@ -2,7 +2,6 @@ package com.creamcode.afterorbefore.Presenters;
 
 import android.widget.Toast;
 
-import com.creamcode.afterorbefore.GameActivity;
 import com.creamcode.afterorbefore.Interactors.GameInteractorImp;
 import com.creamcode.afterorbefore.Interfaces.GameInteractor;
 import com.creamcode.afterorbefore.Interfaces.GamePresenter;
@@ -39,7 +38,8 @@ public class GamePresenterImp implements GamePresenter {
             System.out.println(arrayPictures.get(i));
         }*/
         //mandandole los dos primeros ids random a la vista activity y removiendolos
-        gameView.initializePicturesAB(arrayPictures.get(0).toString(),arrayPictures.get(1).toString(), turnType);
+        gameView.loadQuestion(turnType);
+        gameView.initializePicturesAB(arrayPictures.get(0).toString(),arrayPictures.get(1).toString());
         arrayPictures.remove(0);
         arrayPictures.remove(0);
 
@@ -50,19 +50,62 @@ public class GamePresenterImp implements GamePresenter {
     }
 
     @Override
-    public void nextPicture(PictureFragment pictureFragment) {
-        if(arrayPictures.isEmpty()){
-            System.out.println("ya no hay mas imagenes");
-        }else {
-            gameView.loadNextPictur(pictureFragment, arrayPictures.get(0).toString());
-            arrayPictures.remove(0);
+    public void checkAnswerPresenter(PictureFragment pictureFragmentA, PictureFragment pictureFragmentB, String id) {
+        PictureFragment fragmentActual;
+        //identify wich fragment is calling
+        if(pictureFragmentA.getPictureId().equals(id)){
+            fragmentActual =pictureFragmentA;
+        }else{
+            fragmentActual = pictureFragmentB;
         }
+        if(fragmentActual==pictureFragmentA){//ist fragmentA
+            if(turnType.equals("AFTER")){
+                if(fragmentActual.getYear()<pictureFragmentB.getYear()){
+                    //correcto
+                    nextPicture(pictureFragmentA);
+                }else{
+                    //incorrecto
+                }
+            }else{
+                if(fragmentActual.getYear()>pictureFragmentB.getYear()){
+                    //correcto
+                    nextPicture(pictureFragmentA);
+                }else{
+                    //incorrecto
+
+                }
+            }
+        }else{//ist fragmentB
+            if(turnType.equals("AFTER")){
+                if(fragmentActual.getYear()<pictureFragmentA.getYear()){
+                    //correcto
+                    nextPicture(pictureFragmentB);
+                }else{
+                    //incorrecto
+                }
+            }else{
+                if(fragmentActual.getYear()>pictureFragmentA.getYear()){
+                    //correcto
+                    nextPicture(pictureFragmentB);
+                }else{
+                    //incorrecto
+                }
+            }
+        }
+
     }
 
     @Override
-    public String getTurnType() {
-        return turnType;
+    public void nextPicture(PictureFragment pictureFragment) {
+        if(arrayPictures.isEmpty()){
+            System.out.println("ya no hay mas imagenes");
+            Toast.makeText(pictureFragment.getContext(), "Ganaste", Toast.LENGTH_SHORT).show();
+        }else {
+            gameView.loadNextPicture(pictureFragment, arrayPictures.get(0).toString());
+            arrayPictures.remove(0);
+            this.turnType = gameInteractor.newQuestion();
+            gameView.loadQuestion(this.turnType);
+        }
     }
-
 
 }

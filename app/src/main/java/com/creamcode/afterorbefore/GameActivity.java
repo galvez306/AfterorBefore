@@ -67,9 +67,7 @@ public class GameActivity extends AppCompatActivity implements GameView, Picture
     }
 
     @Override
-    public void initializePicturesAB(String idA, String idB, String questionType) {
-
-        tv_question.setText(questionType);
+    public void initializePicturesAB(String idA, String idB) {
 
         pictureFragmentA = new PictureFragment();
         Bundle bundleA = new Bundle();
@@ -89,59 +87,19 @@ public class GameActivity extends AppCompatActivity implements GameView, Picture
     //this method is called by each fragment by a interface and here its implemented
     @Override
     public void checkAnswer(String id) {
-        PictureFragment fragment = (PictureFragment) identifyFragment(id); //checar cual de los dos fragments esta llamando
-        fragment.getYear();
-        String type = gamePresenter.getTurnType();
-
-        if(fragment==pictureFragmentA){//ist fragmentA
-
-            if(type.equals("AFTER")){
-                if(fragment.getYear()<pictureFragmentB.getYear()){
-                    Toast.makeText(this,"este es after",Toast.LENGTH_SHORT).show();
-                    gamePresenter.nextPicture(pictureFragmentA);
-                }else{
-                    Toast.makeText(this,"este es before",Toast.LENGTH_SHORT).show();
-                }
-            }else{
-                if(fragment.getYear()>pictureFragmentB.getYear()){
-                    Toast.makeText(this,"este es before",Toast.LENGTH_SHORT).show();
-                    gamePresenter.nextPicture(pictureFragmentA);
-                }else{
-                    Toast.makeText(this,"este es after",Toast.LENGTH_SHORT).show();
-                }
-            }
-        }else{//ist fragmentB
-            if(type.equals("AFTER")){
-                if(fragment.getYear()<pictureFragmentA.getYear()){
-                    Toast.makeText(this,"este es after",Toast.LENGTH_SHORT).show();
-                    gamePresenter.nextPicture(pictureFragmentB);
-                }else{
-                    Toast.makeText(this,"este es before",Toast.LENGTH_SHORT).show();
-                }
-            }else{
-                if(fragment.getYear()>pictureFragmentA.getYear()){
-                    Toast.makeText(this,"este es before",Toast.LENGTH_SHORT).show();
-                    gamePresenter.nextPicture(pictureFragmentB);
-                }else{
-                    Toast.makeText(this,"este es after",Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
+        //llevando la logica al presenter
+        gamePresenter.checkAnswerPresenter(pictureFragmentA, pictureFragmentB, id);
 
     }
 
     @Override
-    public void loadNextPictur(PictureFragment pictureFragment, String id) {
+    public void loadNextPicture(PictureFragment pictureFragment, String id) {
         pictureFragment.cargarFoto(id);
     }
 
-    //metodo para recuperar el fragment que esta utilizando la interfaz
-    public Fragment identifyFragment(String id){
-        if(pictureFragmentA.getPictureId().equals(id)){
-            return pictureFragmentA;
-        }else{
-            return pictureFragmentB;
-        }
+    @Override
+    public void loadQuestion(String question) {
+        tv_question.setText(question);
     }
 
 }

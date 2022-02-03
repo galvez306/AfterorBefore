@@ -21,15 +21,6 @@ public class GameInteractorImp implements GameInteractor {
         gamePresenter=presenter;
     }
 
-    public String generateTurnType(){
-        Random random = new Random();
-        if(random.nextBoolean()){
-            return "AFTER";
-        }else{
-            return "BEFORE";
-        }
-    }
-
     @Override
     public void getIds() {
         ArrayList<String > ids = new ArrayList<String>();
@@ -41,6 +32,16 @@ public class GameInteractorImp implements GameInteractor {
             ids.add(random);
         }
 
-        gamePresenter.setIds(ids, generateTurnType());
+        gamePresenter.setIds(ids, newQuestion());
+    }
+
+    @Override
+    public String newQuestion() {
+        Random random = new Random();
+        if(random.nextBoolean()){
+            return "AFTER";
+        }else{
+            return "BEFORE";
+        }
     }
 }

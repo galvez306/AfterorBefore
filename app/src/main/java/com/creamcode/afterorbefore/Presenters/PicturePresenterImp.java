@@ -59,14 +59,10 @@ public class PicturePresenterImp implements PicturePresenter {
 
     @Override
     public void loadFlags(ArrayList <String> names, ArrayList <String> urls) {
-        flagOne = names.get(0).toString();
-        flagTwo = names.get(1).toString();
-        flagThree = names.get(2).toString();
-        System.out.println("tamano que llega de nombres"+names.size());
-        System.out.println("tamano que llega de urls"+urls.size());
+        flagOne = names.get(0);
+        flagTwo = names.get(1);
+        flagThree = names.get(2);
         view.loadFlagsonView(urls.get(0),urls.get(1),urls.get(2));
 
-
     }
-
 }

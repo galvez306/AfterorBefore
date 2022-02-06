@@ -66,7 +66,7 @@ public class GamePresenterImp implements GamePresenter {
                     nextPicture(pictureFragmentA);
                 }else{
                     //incorrecto
-                    //generar flags con picture A
+                    //generar flags con picture A y ocultar a B
                     pictureFragmentA.cargarFlags();
                 }
             }else{
@@ -75,7 +75,7 @@ public class GamePresenterImp implements GamePresenter {
                     nextPicture(pictureFragmentA);
                 }else{
                     //incorrecto
-                    //generar flags con picture A
+                    //generar flags con picture A y ocultar a B
                     pictureFragmentA.cargarFlags();
 
                 }
@@ -87,7 +87,7 @@ public class GamePresenterImp implements GamePresenter {
                     nextPicture(pictureFragmentB);
                 }else{
                     //incorrecto
-                    //generar flags con picture B
+                    //generar flags con picture B y ocultar a A
                     pictureFragmentB.cargarFlags();
                 }
             }else{
@@ -96,7 +96,7 @@ public class GamePresenterImp implements GamePresenter {
                     nextPicture(pictureFragmentB);
                 }else{
                     //incorrecto
-                    //generar flags con picture B
+                    //generar flags con picture y y ocultar a A
                     pictureFragmentB.cargarFlags();
                 }
             }

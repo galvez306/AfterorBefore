@@ -13,4 +13,6 @@ public interface PicturePresenter {
     void loadFlags(ArrayList <String> names, ArrayList <String> urls);
 
 
+
+
 }

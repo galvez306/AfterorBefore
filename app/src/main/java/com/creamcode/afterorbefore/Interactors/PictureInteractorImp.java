@@ -17,6 +17,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class PictureInteractorImp implements PictureInteractor {
 
@@ -25,7 +26,8 @@ public class PictureInteractorImp implements PictureInteractor {
 
     private PicturePresenter presenter;
 
-    private String id, year, country, url;
+    private String id, year, country, url, idFlagCountryActual;
+
 
     public PictureInteractorImp(PicturePresenter presenter){
         this.presenter = presenter;
@@ -57,49 +59,52 @@ public class PictureInteractorImp implements PictureInteractor {
         ArrayList<String > nameFlags = new ArrayList<String>();
         ArrayList<String > urlFlags = new ArrayList<String>();
         ArrayList<String > idsFlags = new ArrayList<String>();
-        //get other two ids of flags
-        for(int i = 0; i<FLAGS; i++){
-            String random = String.valueOf((int) ((Math.random() * (NUM_FLAGS)) ));
-            while(idsFlags.contains(random)){
-                random = String.valueOf((int) ((Math.random() * (NUM_FLAGS)) ));
-            }
-            idsFlags.add(random);
-        }
+
         //get the data flag of the actual country displayed in the fragment
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Flags")
-                .whereEqualTo("country", countryActual)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("Flags").whereEqualTo("country", countryActual).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                System.out.println(document.getString("country"));
-                                System.out.println(document.getString("url"));
+                                idFlagCountryActual = document.getId();
                                 nameFlags.add(document.getString("country"));
                                 urlFlags.add(document.getString("url"));
                             }
-                        } else {
-
                         }
                     }
                 });
 
-
-        for(int j = 0; j<idsFlags.size(); j ++){
-            System.out.println(idsFlags.get(j));
-            db.collection("Flags").document(idsFlags.get(j)).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    System.out.println(documentSnapshot.getString("country"));
-                    nameFlags.add(documentSnapshot.getString("country"));
-                    urlFlags.add(documentSnapshot.getString("url"));
-
-                }
-            });
+        //get other two ids of flags
+        for(int i = 0; i<FLAGS; i++){
+            String random = String.valueOf((int) ((Math.random() * (NUM_FLAGS)) ));
+            while(idsFlags.contains(random) || random.equals(idFlagCountryActual)){
+                random = String.valueOf((int) ((Math.random() * (NUM_FLAGS)) ));
+            }
+            idsFlags.add(random);
         }
-        new CountDownTimer(200, 1000) {
+        //getting data of the 2 left flags, we are starting with
+        for(int j = 0; j<idsFlags.size(); j ++){
+            db.collection("Flags")
+                    .whereEqualTo("__name__", idsFlags.get(j))
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    nameFlags.add(document.getString("country"));
+                                    urlFlags.add(document.getString("url"));
+                                }
+                            }
+                        }
+                    });
+        }
+       /* //para hacer esto debemos convertir los arraylist en HAshmap
+        Collections.shuffle(mylist);*/
+
+        //waiting for the data
+        new CountDownTimer(400, 1000) {
             public void onFinish() {
                 //meter accion aqui
                 presenter.loadFlags(nameFlags, urlFlags);
@@ -107,33 +112,5 @@ public class PictureInteractorImp implements PictureInteractor {
             public void onTick(long millisUntilFinished) {
             }
         }.start();
-
-
-        /*boolean aux= true;
-        do{
-            System.out.println("estamos en el bucle");
-            if(nameFlags.size()==2 && urlFlags.size()==2){
-                System.out.println("salimos del bucle");
-                presenter.loadFlags(nameFlags, urlFlags);
-                aux= false;
-            }
-        }while(aux);*/
-        /*System.out.println(nameFlags.size()+"----"+urlFlags.size());*/
-
-        /*if(!nameFlags.isEmpty() && !urlFlags.isEmpty()){
-            presenter.loadFlags(nameFlags, urlFlags);
-        }*/
-
-
-        //while tamaño no sea cero
-       /* new CountDownTimer(2000, 1000) {
-            public void onFinish() {
-                //meter accion aqui
-                System.out.println(nameFlags.get(0));
-                System.out.println(urlFlags.get(0));
-            }
-            public void onTick(long millisUntilFinished) {
-            }
-        }.start();*/
     }
 }

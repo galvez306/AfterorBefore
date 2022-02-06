@@ -16,6 +16,7 @@ public class GamePresenterImp implements GamePresenter {
     private GameInteractor gameInteractor;
 
     private String turnType;
+    private boolean second_opportunity = false;
 
     private ArrayList arrayPictures = new ArrayList<String>();
 
@@ -60,35 +61,43 @@ public class GamePresenterImp implements GamePresenter {
         }
         if(fragmentActual==pictureFragmentA){//ist fragmentA
             if(turnType.equals("AFTER")){
-                if(fragmentActual.getYear()<pictureFragmentB.getYear()){
-                    //correcto
-                    nextPicture(pictureFragmentA);
-                }else{
-                    //incorrecto
-                }
-            }else{
                 if(fragmentActual.getYear()>pictureFragmentB.getYear()){
                     //correcto
                     nextPicture(pictureFragmentA);
                 }else{
                     //incorrecto
+                    //generar flags con picture A
+                    pictureFragmentA.cargarFlags();
+                }
+            }else{
+                if(fragmentActual.getYear()<pictureFragmentB.getYear()){
+                    //correcto
+                    nextPicture(pictureFragmentA);
+                }else{
+                    //incorrecto
+                    //generar flags con picture A
+                    pictureFragmentA.cargarFlags();
 
                 }
             }
         }else{//ist fragmentB
             if(turnType.equals("AFTER")){
-                if(fragmentActual.getYear()<pictureFragmentA.getYear()){
-                    //correcto
-                    nextPicture(pictureFragmentB);
-                }else{
-                    //incorrecto
-                }
-            }else{
                 if(fragmentActual.getYear()>pictureFragmentA.getYear()){
                     //correcto
                     nextPicture(pictureFragmentB);
                 }else{
                     //incorrecto
+                    //generar flags con picture B
+                    pictureFragmentB.cargarFlags();
+                }
+            }else{
+                if(fragmentActual.getYear()<pictureFragmentA.getYear()){
+                    //correcto
+                    nextPicture(pictureFragmentB);
+                }else{
+                    //incorrecto
+                    //generar flags con picture B
+                    pictureFragmentB.cargarFlags();
                 }
             }
         }

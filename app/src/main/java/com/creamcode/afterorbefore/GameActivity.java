@@ -86,7 +86,7 @@ public class GameActivity extends AppCompatActivity implements GameView, Picture
 
     //this method is called by each fragment by a interface and here its implemented
     @Override
-    public void checkAnswer(String id) {
+    public void checkAnswerCountry(String id) {
         //llevando la logica al presenter
         gamePresenter.checkAnswerPresenter(pictureFragmentA, pictureFragmentB, id);
 

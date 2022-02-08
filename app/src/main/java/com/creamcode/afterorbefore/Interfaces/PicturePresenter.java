@@ -1,6 +1,8 @@
 package com.creamcode.afterorbefore.Interfaces;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public interface PicturePresenter {
 
@@ -10,7 +12,7 @@ public interface PicturePresenter {
     int getYear();
     String getCountry();
     void getFlags();
-    void loadFlags(ArrayList <String> names, ArrayList <String> urls);
+    void loadFlags(ArrayList<String[]> flags);
 
 
 

@@ -10,6 +10,7 @@ import com.creamcode.afterorbefore.Interfaces.PicturePresenter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -18,26 +19,21 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 public class PictureInteractorImp implements PictureInteractor {
 
     private final static int NUM_FLAGS = 78; // cantidad de fotos en la coleccion
-    private final static int FLAGS = 2; // cantidad de fotos en el fragment
+    private final static int FLAGS = 3; // cantidad de fotos en el fragment
 
     private PicturePresenter presenter;
 
-    private String id, year, country, url, idFlagCountryActual;
-
+    private String  idFlagCountryActual;
 
     public PictureInteractorImp(PicturePresenter presenter){
         this.presenter = presenter;
-
-        id="null";
-        year = "null";
-        country = "null";
-        url = "null";
     }
-
 
     @Override
     public void getPhoto(String id) {
@@ -45,10 +41,8 @@ public class PictureInteractorImp implements PictureInteractor {
         db.collection("Pictures").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                year = documentSnapshot.getLong("year").toString();
-                country = documentSnapshot.getString("country");
-                url = documentSnapshot.getString("url");
-                presenter.loadPhotoData(id,year,country,url);
+                presenter.loadPhotoData(id,documentSnapshot.getLong("year").toString(),
+                        documentSnapshot.getString("country"),documentSnapshot.getString("url"));
             }
         });
 
@@ -56,8 +50,7 @@ public class PictureInteractorImp implements PictureInteractor {
 
     @Override
     public void getRandomFlags(String countryActual) {
-        ArrayList<String > nameFlags = new ArrayList<String>();
-        ArrayList<String > urlFlags = new ArrayList<String>();
+        ArrayList<String[]> flags = new ArrayList<String[]>();
         ArrayList<String > idsFlags = new ArrayList<String>();
 
         //get the data flag of the actual country displayed in the fragment
@@ -68,15 +61,15 @@ public class PictureInteractorImp implements PictureInteractor {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 idFlagCountryActual = document.getId();
-                                nameFlags.add(document.getString("country"));
-                                urlFlags.add(document.getString("url"));
+                                String [] flag = {document.getString("country"),document.getString("url")};
+                                flags.add(flag);
                             }
                         }
                     }
                 });
 
         //get other two ids of flags
-        for(int i = 0; i<FLAGS; i++){
+        for(int i = 0; i<FLAGS-1; i++){
             String random = String.valueOf((int) ((Math.random() * (NUM_FLAGS)) ));
             while(idsFlags.contains(random) || random.equals(idFlagCountryActual)){
                 random = String.valueOf((int) ((Math.random() * (NUM_FLAGS)) ));
@@ -93,21 +86,19 @@ public class PictureInteractorImp implements PictureInteractor {
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
-                                    nameFlags.add(document.getString("country"));
-                                    urlFlags.add(document.getString("url"));
+                                    String [] flag = {document.getString("country"),document.getString("url")};
+                                    flags.add(flag);
                                 }
                             }
                         }
                     });
         }
-       /* //para hacer esto debemos convertir los arraylist en HAshmap
-        Collections.shuffle(mylist);*/
-
+        //disording the flags to implement randomity
+        Collections.shuffle(flags);
         //waiting for the data
         new CountDownTimer(400, 1000) {
             public void onFinish() {
-                //meter accion aqui
-                presenter.loadFlags(nameFlags, urlFlags);
+                presenter.loadFlags(flags);
             }
             public void onTick(long millisUntilFinished) {
             }

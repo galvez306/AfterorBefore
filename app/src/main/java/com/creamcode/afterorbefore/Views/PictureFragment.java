@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -21,6 +20,12 @@ import com.creamcode.afterorbefore.Interfaces.PictureView;
 import com.creamcode.afterorbefore.Presenters.PicturePresenterImp;
 import com.creamcode.afterorbefore.R;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+
 
 public class PictureFragment extends Fragment implements PictureView {
 
@@ -32,13 +37,14 @@ public class PictureFragment extends Fragment implements PictureView {
     private ImageView imvPicture;
     private ImageView btnFlagOne, btnFlagTwo, btnFlagThree;
 
+    private String flagOne, flagTwo, flagThree;
 
 
     private PicturePresenter presenter;
 
 
     public interface PictureFragmentInterface{
-        void checkAnswer(String id);
+        void checkAnswerCountry(String id);
     }
 
     @Override
@@ -47,10 +53,13 @@ public class PictureFragment extends Fragment implements PictureView {
         View view = inflater.inflate(R.layout.fragment_picture, container, false);
 
         mainLyt = view.findViewById(R.id.main_layout);
+
         tvID = view.findViewById(R.id.tv_id_picture);
         tvYear = view.findViewById(R.id.tv_year_picture);
         tvCountry = view.findViewById(R.id.tv_country_picture);
+
         imvPicture = view.findViewById(R.id.imv_picture);
+
         btnFlagOne = view.findViewById(R.id.btn_flag_one);
         btnFlagTwo = view.findViewById(R.id.btn_flag_two);
         btnFlagThree = view.findViewById(R.id.btn_flag_three);
@@ -65,7 +74,25 @@ public class PictureFragment extends Fragment implements PictureView {
         mainLyt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                pfInterface.checkAnswer(presenter.getPictureId());
+                pfInterface.checkAnswerCountry(presenter.getPictureId());
+            }
+        });
+        btnFlagOne.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(),"esta es la bandera "+flagOne,Toast.LENGTH_SHORT).show();
+            }
+        });
+        btnFlagTwo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(),"esta es la bandera "+flagTwo,Toast.LENGTH_SHORT).show();
+            }
+        });
+        btnFlagThree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(),"esta es la bandera "+flagThree,Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -115,10 +142,23 @@ public class PictureFragment extends Fragment implements PictureView {
     }
 
     @Override
-    public void loadFlagsonView(String flagone, String flagtwo, String flagThree) {
-        Glide.with(getContext()).load(flagone).into(btnFlagOne);
-        Glide.with(getContext()).load(flagtwo).into(btnFlagTwo);
-        Glide.with(getContext()).load(flagThree).into(btnFlagThree);
+    public void loadFlagsonView(ArrayList<String[]> flags) {
+        flagOne = flags.get(0)[0];
+        flagTwo =flags.get(1)[0];
+        flagThree = flags.get(2)[0];
+        Glide.with(getContext()).load(flags.get(0)[1]).into(btnFlagOne);
+        Glide.with(getContext()).load(flags.get(1)[1]).into(btnFlagTwo);
+        Glide.with(getContext()).load(flags.get(2)[1]).into(btnFlagThree);
+
+
+        //esto no desordena el map, solo lo lee en desorden
+        /*List keys = new ArrayList(flagsMap.keySet());
+        Collections.shuffle(keys);
+        for (Object o : keys) {
+            flagsMap.get(o);
+        }*/
+
+
     }
 
     //Methods to match the fragment with the interface in the activity

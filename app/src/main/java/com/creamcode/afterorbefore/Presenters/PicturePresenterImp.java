@@ -6,18 +6,37 @@ import com.creamcode.afterorbefore.Interfaces.PicturePresenter;
 import com.creamcode.afterorbefore.Interfaces.PictureView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 public class PicturePresenterImp implements PicturePresenter {
 
     private PictureView view;
     private PictureInteractor interactor;
 
-    private String pictureId, country, flagOne, flagTwo, flagThree;
+    private String pictureId, country;
     private int year;
 
     public PicturePresenterImp(PictureView view) {
         this.view = view;
         this.interactor = new PictureInteractorImp(this);
+    }
+
+    @Override
+    public String getPictureId() {
+        return pictureId;
+    }
+
+    @Override
+    public int getYear() {
+        return year;
+    }
+
+    @Override
+    public String getCountry() {
+        return country;
     }
 
     @Override
@@ -37,32 +56,13 @@ public class PicturePresenterImp implements PicturePresenter {
     }
 
     @Override
-    public String getPictureId() {
-        return pictureId;
-    }
-
-    @Override
-    public int getYear() {
-        return year;
-    }
-
-    @Override
-    public String getCountry() {
-        return country;
-    }
-
-    @Override
     public void getFlags() {
-        // llamar al interactor
         interactor.getRandomFlags(country);
     }
 
     @Override
-    public void loadFlags(ArrayList <String> names, ArrayList <String> urls) {
-        flagOne = names.get(0);
-        flagTwo = names.get(1);
-        flagThree = names.get(2);
-        view.loadFlagsonView(urls.get(0),urls.get(1),urls.get(2));
+    public void loadFlags(ArrayList<String[]> flags) {
+        view.loadFlagsonView(flags);
 
     }
 }

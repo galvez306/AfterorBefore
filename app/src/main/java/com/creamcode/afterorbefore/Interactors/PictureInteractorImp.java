@@ -93,11 +93,13 @@ public class PictureInteractorImp implements PictureInteractor {
                         }
                     });
         }
-        //disording the flags to implement randomity
-        Collections.shuffle(flags);
+
         //waiting for the data
         new CountDownTimer(400, 1000) {
-            public void onFinish() {
+            public void onFinish()
+            {
+                //disording the flags to implement randomity
+                Collections.shuffle(flags);
                 presenter.loadFlags(flags);
             }
             public void onTick(long millisUntilFinished) {

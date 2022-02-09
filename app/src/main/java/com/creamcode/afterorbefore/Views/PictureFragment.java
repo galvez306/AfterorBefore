@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -31,7 +32,8 @@ public class PictureFragment extends Fragment implements PictureView {
 
     private PictureFragmentInterface pfInterface;
 
-    private LinearLayout mainLyt;
+    private ConstraintLayout mainLyt;
+    private LinearLayout  flagsLyt;
 
     public TextView tvID, tvCountry, tvYear;
     private ImageView imvPicture;
@@ -53,6 +55,7 @@ public class PictureFragment extends Fragment implements PictureView {
         View view = inflater.inflate(R.layout.fragment_picture, container, false);
 
         mainLyt = view.findViewById(R.id.main_layout);
+        flagsLyt = view.findViewById(R.id.flags_layout);
 
         tvID = view.findViewById(R.id.tv_id_picture);
         tvYear = view.findViewById(R.id.tv_year_picture);
@@ -116,6 +119,7 @@ public class PictureFragment extends Fragment implements PictureView {
     }
 
     public void cargarFlags(){
+        flagsLyt.setVisibility(View.VISIBLE);
         presenter.getFlags();
     }
 

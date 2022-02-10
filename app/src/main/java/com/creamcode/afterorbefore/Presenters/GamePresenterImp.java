@@ -59,6 +59,7 @@ public class GamePresenterImp implements GamePresenter {
                     //incorrecto
                     //generar flags con picture A y ocultar a B
                     if(!second_opportunity){
+                        //falta bloquear a B
                         pictureFragmentA.cargarFlags();
                     }else{
                         Toast.makeText(pictureFragmentA.getContext(), "Perdiste", Toast.LENGTH_SHORT).show();
@@ -72,6 +73,7 @@ public class GamePresenterImp implements GamePresenter {
                     //incorrecto
                     //generar flags con picture A y ocultar a B
                     if(!second_opportunity){
+                        //falta bloquear a B
                         pictureFragmentA.cargarFlags();
                     }else{
                         Toast.makeText(pictureFragmentB.getContext(), "Perdiste", Toast.LENGTH_SHORT).show();
@@ -88,6 +90,7 @@ public class GamePresenterImp implements GamePresenter {
                     //incorrecto
                     //generar flags con picture B y ocultar a A
                     if(!second_opportunity){
+                        //falta bloquear a A
                         pictureFragmentB.cargarFlags();
                     }else{
                         Toast.makeText(pictureFragmentB.getContext(), "Perdiste", Toast.LENGTH_SHORT).show();
@@ -101,6 +104,7 @@ public class GamePresenterImp implements GamePresenter {
                     //incorrecto
                     //generar flags con picture y y ocultar a A
                     if(!second_opportunity){
+                        //falta bloquear a A
                         pictureFragmentB.cargarFlags();
                     }else{
                         Toast.makeText(pictureFragmentB.getContext(), "Perdiste", Toast.LENGTH_SHORT).show();
@@ -112,37 +116,7 @@ public class GamePresenterImp implements GamePresenter {
 
     }
 
-    @Override
-    public void checkAnswerFlagPresenter(PictureFragment pictureFragmentA, PictureFragment pictureFragmentB, String flagName) {
-        PictureFragment fragmentActual;
-        //identify wich fragment is calling
-        if(pictureFragmentA.getCountry().equals(flagName)){
-            fragmentActual =pictureFragmentA;
-        }else{
-            fragmentActual = pictureFragmentB;
-        }
-        if(fragmentActual==pictureFragmentA){//ist fragmentA
-            if(pictureFragmentA.getCountry().equals(flagName)){
-                //correct, hide flags and next picture, and secondtry==true
-                second_opportunity = true;
-                pictureFragmentA.flagsLayoutVisibility(false);
-                pictureFragmentA.pictureOpacity(false);
-                nextPicture(pictureFragmentA);
-            }else{
-                //incorrect, quite the game
-            }
-        }else{//ist fragmentB
-            if(pictureFragmentB.getCountry().equals(flagName)){
-                //correct, hide flags and next picture, and secondtry==true
-                second_opportunity = true;
-                pictureFragmentB.flagsLayoutVisibility(false);
-                pictureFragmentB.pictureOpacity(false);
-                nextPicture(pictureFragmentB);
-            }else{
-                //incorrect, quite the game
-            }
-        }
-    }
+
 
     @Override
     public void flagNameAnswer(boolean answer, String id, PictureFragment pictureFragmentA, PictureFragment pictureFragmentB) {
@@ -156,6 +130,7 @@ public class GamePresenterImp implements GamePresenter {
         if(fragmentActual==pictureFragmentA){//ist fragmentA
             if(answer==true){
                 //correcto
+                //falta desbloquear
                 second_opportunity=true;
                 pictureFragmentA.flagsLayoutVisibility(false);
                 pictureFragmentA.pictureOpacity(false);
@@ -166,6 +141,7 @@ public class GamePresenterImp implements GamePresenter {
         }else{//ist fragmentB
             if(answer==true){
                 //correcto
+                //falta desbloquear
                 second_opportunity=true;
                 pictureFragmentB.flagsLayoutVisibility(false);
                 pictureFragmentB.pictureOpacity(false);

@@ -8,7 +8,6 @@ public interface GamePresenter {
     void getIds();
     void setIds(ArrayList ids, String turnType);
     void checkAnswerPresenter(PictureFragment pictureFragmentA, PictureFragment pictureFragmentB, String id);
-    void checkAnswerFlagPresenter(PictureFragment pictureFragmentA, PictureFragment pictureFragmentB, String flagName);
     void flagNameAnswer(boolean answer, String id, PictureFragment pictureFragmentA, PictureFragment pictureFragmentB);
     void nextPicture(PictureFragment pictureFragment);
 }

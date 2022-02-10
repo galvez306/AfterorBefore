@@ -80,10 +80,6 @@ public class GameActivity extends AppCompatActivity implements GameView, Picture
 
     }
 
-    @Override
-    public void checkAnswerFlag(String flagName) {
-        gamePresenter.checkAnswerFlagPresenter(pictureFragmentA,pictureFragmentB,flagName);
-    }
 
     @Override
     public void checkNameFlagAnswer(boolean answer, String id) {

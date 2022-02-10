@@ -41,7 +41,6 @@ public class PictureFragment extends Fragment implements PictureView {
 
     public interface PictureFragmentInterface{
         void checkAnswerCountry(String id);
-        void checkAnswerFlag(String flagName);
         void checkNameFlagAnswer(boolean answer, String id);
     }
 
@@ -79,22 +78,19 @@ public class PictureFragment extends Fragment implements PictureView {
         btnFlagOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //cheansewer flag , realizar logica en activity, si es correcto, esconder banderas y load nextpicture
-                /*pfInterface.checkAnswerFlag(flagOne);*/
+
                 presenter.checkFlagName(1);
             }
         });
         btnFlagTwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*pfInterface.checkAnswerFlag(flagTwo);*/
                 presenter.checkFlagName(2);
             }
         });
         btnFlagThree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*pfInterface.checkAnswerFlag(flagThree);*/
                 presenter.checkFlagName(3);
             }
         });
@@ -110,9 +106,6 @@ public class PictureFragment extends Fragment implements PictureView {
         return presenter.getYear();
     }
 
-    public String getCountry() {
-        return presenter.getCountry();
-    }
 
     public void cargarFoto(String id){
         presenter.getPhotoData(id);
@@ -151,7 +144,6 @@ public class PictureFragment extends Fragment implements PictureView {
 
     @Override
     public void loadCountry(String country) {
-
         tvCountry.setText(country);
     }
 

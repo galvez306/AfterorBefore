@@ -79,30 +79,22 @@ public class PicturePresenterImp implements PicturePresenter {
         switch (flagNumber){
             case 1:
                 if(nameFlagOne.equals(country)){
-                    System.out.println("bandera correcta");
-                    //hablar al activity para que nos cambie
                     view.sendFlagNameAnswer(true, pictureId);
                 }else{
-                    //hablar al activity para que se acabe
-                    System.out.println("bandera incorrecta");
                     view.sendFlagNameAnswer(false, pictureId);
                 }
                 break;
             case 2:
                 if(nameFlagTwo.equals(country)){
-                    System.out.println("bandera correcta");
                     view.sendFlagNameAnswer(true, pictureId);
                 }else{
-                    System.out.println("bandera incorrecta");
                     view.sendFlagNameAnswer(false, pictureId);
                 }
                 break;
             case 3:
                 if(nameFlagThree.equals(country)){
-                    System.out.println("bandera correcta");
                     view.sendFlagNameAnswer(true, pictureId);
                 }else{
-                    System.out.println("bandera incorrecta");
                     view.sendFlagNameAnswer(false, pictureId);
                 }
                 break;

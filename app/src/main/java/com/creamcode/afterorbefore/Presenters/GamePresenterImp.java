@@ -60,6 +60,8 @@ public class GamePresenterImp implements GamePresenter {
                     //generar flags con picture A y ocultar a B
                     if(!second_opportunity){
                         //falta bloquear a B
+                        pictureFragmentA.lockPictureFuncionality(true);
+                        pictureFragmentB.lockPictureFuncionality(true);
                         pictureFragmentA.cargarFlags();
                     }else{
                         Toast.makeText(pictureFragmentA.getContext(), "Perdiste", Toast.LENGTH_SHORT).show();
@@ -74,6 +76,8 @@ public class GamePresenterImp implements GamePresenter {
                     //generar flags con picture A y ocultar a B
                     if(!second_opportunity){
                         //falta bloquear a B
+                        pictureFragmentA.lockPictureFuncionality(true);
+                        pictureFragmentB.lockPictureFuncionality(true);
                         pictureFragmentA.cargarFlags();
                     }else{
                         Toast.makeText(pictureFragmentB.getContext(), "Perdiste", Toast.LENGTH_SHORT).show();
@@ -91,6 +95,8 @@ public class GamePresenterImp implements GamePresenter {
                     //generar flags con picture B y ocultar a A
                     if(!second_opportunity){
                         //falta bloquear a A
+                        pictureFragmentA.lockPictureFuncionality(true);
+                        pictureFragmentB.lockPictureFuncionality(true);
                         pictureFragmentB.cargarFlags();
                     }else{
                         Toast.makeText(pictureFragmentB.getContext(), "Perdiste", Toast.LENGTH_SHORT).show();
@@ -105,6 +111,8 @@ public class GamePresenterImp implements GamePresenter {
                     //generar flags con picture y y ocultar a A
                     if(!second_opportunity){
                         //falta bloquear a A
+                        pictureFragmentA.lockPictureFuncionality(true);
+                        pictureFragmentB.lockPictureFuncionality(true);
                         pictureFragmentB.cargarFlags();
                     }else{
                         Toast.makeText(pictureFragmentB.getContext(), "Perdiste", Toast.LENGTH_SHORT).show();
@@ -135,6 +143,8 @@ public class GamePresenterImp implements GamePresenter {
                 pictureFragmentA.flagsLayoutVisibility(false);
                 pictureFragmentA.pictureOpacity(false);
                 nextPicture(pictureFragmentA);
+                pictureFragmentA.lockPictureFuncionality(false);
+                pictureFragmentB.lockPictureFuncionality(false);
             }else{
                 //incorrecto
             }
@@ -146,6 +156,8 @@ public class GamePresenterImp implements GamePresenter {
                 pictureFragmentB.flagsLayoutVisibility(false);
                 pictureFragmentB.pictureOpacity(false);
                 nextPicture(pictureFragmentB);
+                pictureFragmentA.lockPictureFuncionality(false);
+                pictureFragmentB.lockPictureFuncionality(false);
             }else{
                 //incorrecto
             }

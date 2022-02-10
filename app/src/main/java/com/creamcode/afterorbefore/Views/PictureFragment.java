@@ -72,7 +72,7 @@ public class PictureFragment extends Fragment implements PictureView {
         mainLyt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                pfInterface.checkAnswerCountry(presenter.getPictureId());
+                presenter.checkPictureYear();
             }
         });
         btnFlagOne.setOnClickListener(new View.OnClickListener() {
@@ -96,6 +96,10 @@ public class PictureFragment extends Fragment implements PictureView {
         });
 
         return view;
+    }
+
+    public void lockPictureFuncionality(boolean lock){
+        presenter.lockingPicture(lock);
     }
 
     public String getPictureId() {
@@ -158,6 +162,11 @@ public class PictureFragment extends Fragment implements PictureView {
         Glide.with(getContext()).load(flags.get(1)[1]).into(btnFlagTwo);
         Glide.with(getContext()).load(flags.get(2)[1]).into(btnFlagThree);
 
+    }
+
+    @Override
+    public void sendPictureYearAnswer(String pictureFragmentId) {
+        pfInterface.checkAnswerCountry(pictureFragmentId);
     }
 
     @Override

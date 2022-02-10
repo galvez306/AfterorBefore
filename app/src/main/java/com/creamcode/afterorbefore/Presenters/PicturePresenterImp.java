@@ -22,6 +22,7 @@ public class PicturePresenterImp implements PicturePresenter {
     private String pictureId, country;
     private String nameFlagOne, nameFlagTwo, nameFlagThree;
     private int year;
+    private boolean lock= false;
 
     public PicturePresenterImp(PictureView view) {
         this.view = view;
@@ -39,9 +40,12 @@ public class PicturePresenterImp implements PicturePresenter {
     }
 
     @Override
-    public String getCountry() {
-        return country;
+    public void checkPictureYear() {
+        if(!lock){
+           view.sendPictureYearAnswer(pictureId);
+        }
     }
+
 
     @Override
     public void getPhotoData(String id) {
@@ -62,6 +66,11 @@ public class PicturePresenterImp implements PicturePresenter {
     @Override
     public void getFlags() {
         interactor.getRandomFlags(country);
+    }
+
+    @Override
+    public void lockingPicture(boolean lock) {
+        this.lock = lock;
     }
 
     @Override

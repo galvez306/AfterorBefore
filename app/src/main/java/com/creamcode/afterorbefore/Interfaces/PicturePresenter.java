@@ -12,8 +12,9 @@ public interface PicturePresenter {
     void loadPhotoData(String id, String year, String country, String url);
     String getPictureId();
     int getYear();
-    String getCountry();
+    void checkPictureYear();
     void getFlags();
+    void lockingPicture(boolean lock);
     void loadFlags(ArrayList<String[]> flags);
     void checkFlagName(int flagNumber);
 

@@ -1,5 +1,7 @@
 package com.creamcode.afterorbefore.Interfaces;
 
+import android.view.View;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +15,7 @@ public interface PicturePresenter {
     String getCountry();
     void getFlags();
     void loadFlags(ArrayList<String[]> flags);
+    void checkFlagName(int flagNumber);
 
 
 

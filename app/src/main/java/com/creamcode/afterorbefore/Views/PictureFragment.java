@@ -32,9 +32,8 @@ public class PictureFragment extends Fragment implements PictureView {
 
     public TextView tvID, tvCountry, tvYear;
     private ImageView imvPicture;
-    private ImageView btnFlagOne, btnFlagTwo, btnFlagThree;
+    public ImageView btnFlagOne, btnFlagTwo, btnFlagThree;
 
-    private String flagOne, flagTwo, flagThree;
 
 
     private PicturePresenter presenter;
@@ -43,6 +42,7 @@ public class PictureFragment extends Fragment implements PictureView {
     public interface PictureFragmentInterface{
         void checkAnswerCountry(String id);
         void checkAnswerFlag(String flagName);
+        void checkNameFlagAnswer(boolean answer, String id);
     }
 
     @Override
@@ -80,19 +80,22 @@ public class PictureFragment extends Fragment implements PictureView {
             @Override
             public void onClick(View view) {
                 //cheansewer flag , realizar logica en activity, si es correcto, esconder banderas y load nextpicture
-                pfInterface.checkAnswerFlag(flagOne);
+                /*pfInterface.checkAnswerFlag(flagOne);*/
+                presenter.checkFlagName(1);
             }
         });
         btnFlagTwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                pfInterface.checkAnswerFlag(flagTwo);
+                /*pfInterface.checkAnswerFlag(flagTwo);*/
+                presenter.checkFlagName(2);
             }
         });
         btnFlagThree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                pfInterface.checkAnswerFlag(flagThree);
+                /*pfInterface.checkAnswerFlag(flagThree);*/
+                presenter.checkFlagName(3);
             }
         });
 
@@ -159,22 +162,15 @@ public class PictureFragment extends Fragment implements PictureView {
 
     @Override
     public void loadFlagsonView(ArrayList<String[]> flags) {
-        flagOne = flags.get(0)[0];
-        flagTwo =flags.get(1)[0];
-        flagThree = flags.get(2)[0];
         Glide.with(getContext()).load(flags.get(0)[1]).into(btnFlagOne);
         Glide.with(getContext()).load(flags.get(1)[1]).into(btnFlagTwo);
         Glide.with(getContext()).load(flags.get(2)[1]).into(btnFlagThree);
 
+    }
 
-        //esto no desordena el map, solo lo lee en desorden
-        /*List keys = new ArrayList(flagsMap.keySet());
-        Collections.shuffle(keys);
-        for (Object o : keys) {
-            flagsMap.get(o);
-        }*/
-
-
+    @Override
+    public void sendFlagNameAnswer(boolean answer, String pictureFragmentId) {
+        pfInterface.checkNameFlagAnswer(answer,pictureFragmentId);
     }
 
     //Methods to match the fragment with the interface in the activity

@@ -145,6 +145,40 @@ public class GamePresenterImp implements GamePresenter {
     }
 
     @Override
+    public void flagNameAnswer(boolean answer, String id, PictureFragment pictureFragmentA, PictureFragment pictureFragmentB) {
+        PictureFragment fragmentActual;
+        //identify wich fragment is calling
+        if(pictureFragmentA.getPictureId().equals(id)){
+            fragmentActual =pictureFragmentA;
+        }else{
+            fragmentActual = pictureFragmentB;
+        }
+        if(fragmentActual==pictureFragmentA){//ist fragmentA
+            if(answer==true){
+                //correcto
+                second_opportunity=true;
+                pictureFragmentA.flagsLayoutVisibility(false);
+                pictureFragmentA.pictureOpacity(false);
+                nextPicture(pictureFragmentA);
+            }else{
+                //incorrecto
+            }
+        }else{//ist fragmentB
+            if(answer==true){
+                //correcto
+                second_opportunity=true;
+                pictureFragmentB.flagsLayoutVisibility(false);
+                pictureFragmentB.pictureOpacity(false);
+                nextPicture(pictureFragmentB);
+            }else{
+                //incorrecto
+            }
+
+        }
+
+    }
+
+    @Override
     public void nextPicture(PictureFragment pictureFragment) {
         if(arrayPictures.isEmpty()){
             Toast.makeText(pictureFragment.getContext(), "Ganaste", Toast.LENGTH_SHORT).show();

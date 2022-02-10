@@ -12,5 +12,6 @@ public interface PictureView {
     void loadCountry(String country);
     void loadUrl(String url);
     void loadFlagsonView(ArrayList<String[]> flags);
+    void sendFlagNameAnswer(boolean answer, String pictureFragmentId);
 
 }

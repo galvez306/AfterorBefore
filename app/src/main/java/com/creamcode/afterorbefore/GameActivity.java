@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -39,31 +40,17 @@ public class GameActivity extends AppCompatActivity implements GameView, Picture
 
     TextView tv_question;
 
-    //
-    Button btnCambiar;
-    //
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        FullScreencall();
 
         tv_question = findViewById(R.id.tv_question);
 
         gamePresenter = new GamePresenterImp(this);
         gamePresenter.getIds();
 
-        //
-        btnCambiar = findViewById(R.id.btn_cambiar);
-        btnCambiar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pictureFragmentA.cargarFoto("5");
-            }
-        });
-
-        //
 
     }
 
@@ -106,6 +93,18 @@ public class GameActivity extends AppCompatActivity implements GameView, Picture
     @Override
     public void loadQuestion(String question) {
         tv_question.setText(question);
+    }
+
+    public void FullScreencall() {
+        if(Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) { // lower api
+            View v = this.getWindow().getDecorView();
+            v.setSystemUiVisibility(View.GONE);
+        } else if(Build.VERSION.SDK_INT >= 19) {
+            //for new api versions.
+            View decorView = getWindow().getDecorView();
+            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+            decorView.setSystemUiVisibility(uiOptions);
+        }
     }
 
 }

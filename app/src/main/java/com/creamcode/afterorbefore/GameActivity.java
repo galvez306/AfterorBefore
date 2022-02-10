@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -90,6 +91,11 @@ public class GameActivity extends AppCompatActivity implements GameView, Picture
         //llevando la logica al presenter
         gamePresenter.checkAnswerPresenter(pictureFragmentA, pictureFragmentB, id);
 
+    }
+
+    @Override
+    public void checkAnswerFlag(String flagName) {
+        gamePresenter.checkAnswerFlagPresenter(pictureFragmentA,pictureFragmentB,flagName);
     }
 
     @Override

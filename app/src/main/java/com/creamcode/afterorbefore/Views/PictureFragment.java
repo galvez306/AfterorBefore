@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.creamcode.afterorbefore.Interfaces.PicturePresenter;
@@ -22,10 +21,6 @@ import com.creamcode.afterorbefore.Presenters.PicturePresenterImp;
 import com.creamcode.afterorbefore.R;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 
 
 public class PictureFragment extends Fragment implements PictureView {
@@ -47,6 +42,7 @@ public class PictureFragment extends Fragment implements PictureView {
 
     public interface PictureFragmentInterface{
         void checkAnswerCountry(String id);
+        void checkAnswerFlag(String flagName);
     }
 
     @Override
@@ -83,19 +79,20 @@ public class PictureFragment extends Fragment implements PictureView {
         btnFlagOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(),"esta es la bandera "+flagOne,Toast.LENGTH_SHORT).show();
+                //cheansewer flag , realizar logica en activity, si es correcto, esconder banderas y load nextpicture
+                pfInterface.checkAnswerFlag(flagOne);
             }
         });
         btnFlagTwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(),"esta es la bandera "+flagTwo,Toast.LENGTH_SHORT).show();
+                pfInterface.checkAnswerFlag(flagTwo);
             }
         });
         btnFlagThree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(),"esta es la bandera "+flagThree,Toast.LENGTH_SHORT).show();
+                pfInterface.checkAnswerFlag(flagThree);
             }
         });
 
@@ -119,8 +116,23 @@ public class PictureFragment extends Fragment implements PictureView {
     }
 
     public void cargarFlags(){
-        flagsLyt.setVisibility(View.VISIBLE);
+        pictureOpacity(true);
+        flagsLayoutVisibility(true);
         presenter.getFlags();
+    }
+    public void flagsLayoutVisibility(Boolean visivility){
+        if(visivility){
+            flagsLyt.setVisibility(View.VISIBLE);
+        }else{
+            flagsLyt.setVisibility(View.INVISIBLE);
+        }
+    }
+    public void pictureOpacity(Boolean visivility){
+        if(visivility){
+            imvPicture.setAlpha(0.6f);
+        }else{
+            imvPicture.setAlpha(1.0f);
+        }
     }
 
     //metodos de la interface del mvp del fragment

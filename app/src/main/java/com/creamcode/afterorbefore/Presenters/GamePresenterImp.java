@@ -34,20 +34,11 @@ public class GamePresenterImp implements GamePresenter {
     public void setIds(ArrayList ids, String turnType) {
         arrayPictures = ids;
         this.turnType = turnType;
-        /*for (int i = 0; i< arrayPictures.size(); i++){
-            System.out.print("elemento "+i+"--->");
-            System.out.println(arrayPictures.get(i));
-        }*/
         //mandandole los dos primeros ids random a la vista activity y removiendolos
         gameView.loadQuestion(turnType);
         gameView.initializePicturesAB(arrayPictures.get(0).toString(),arrayPictures.get(1).toString());
         arrayPictures.remove(0);
         arrayPictures.remove(0);
-
-       /* for (int i = 0; i< arrayPictures.size(); i++){
-            System.out.print("elemento "+i+"--->");
-            System.out.println(arrayPictures.get(i));
-        }*/
     }
 
     @Override
@@ -67,16 +58,24 @@ public class GamePresenterImp implements GamePresenter {
                 }else{
                     //incorrecto
                     //generar flags con picture A y ocultar a B
-                    pictureFragmentA.cargarFlags();
+                    if(!second_opportunity){
+                        pictureFragmentA.cargarFlags();
+                    }else{
+                        Toast.makeText(pictureFragmentA.getContext(), "Perdiste", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }else{
+            }else{//its BEFORE
                 if(fragmentActual.getYear()<pictureFragmentB.getYear()){
                     //correcto
                     nextPicture(pictureFragmentA);
                 }else{
                     //incorrecto
                     //generar flags con picture A y ocultar a B
-                    pictureFragmentA.cargarFlags();
+                    if(!second_opportunity){
+                        pictureFragmentA.cargarFlags();
+                    }else{
+                        Toast.makeText(pictureFragmentB.getContext(), "Perdiste", Toast.LENGTH_SHORT).show();
+                    }
 
                 }
             }
@@ -88,7 +87,11 @@ public class GamePresenterImp implements GamePresenter {
                 }else{
                     //incorrecto
                     //generar flags con picture B y ocultar a A
-                    pictureFragmentB.cargarFlags();
+                    if(!second_opportunity){
+                        pictureFragmentB.cargarFlags();
+                    }else{
+                        Toast.makeText(pictureFragmentB.getContext(), "Perdiste", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }else{
                 if(fragmentActual.getYear()<pictureFragmentA.getYear()){
@@ -97,7 +100,12 @@ public class GamePresenterImp implements GamePresenter {
                 }else{
                     //incorrecto
                     //generar flags con picture y y ocultar a A
-                    pictureFragmentB.cargarFlags();
+                    if(!second_opportunity){
+                        pictureFragmentB.cargarFlags();
+                    }else{
+                        Toast.makeText(pictureFragmentB.getContext(), "Perdiste", Toast.LENGTH_SHORT).show();
+                    }
+
                 }
             }
         }
@@ -105,9 +113,40 @@ public class GamePresenterImp implements GamePresenter {
     }
 
     @Override
+    public void checkAnswerFlagPresenter(PictureFragment pictureFragmentA, PictureFragment pictureFragmentB, String flagName) {
+        PictureFragment fragmentActual;
+        //identify wich fragment is calling
+        if(pictureFragmentA.getCountry().equals(flagName)){
+            fragmentActual =pictureFragmentA;
+        }else{
+            fragmentActual = pictureFragmentB;
+        }
+        if(fragmentActual==pictureFragmentA){//ist fragmentA
+            if(pictureFragmentA.getCountry().equals(flagName)){
+                //correct, hide flags and next picture, and secondtry==true
+                second_opportunity = true;
+                pictureFragmentA.flagsLayoutVisibility(false);
+                pictureFragmentA.pictureOpacity(false);
+                nextPicture(pictureFragmentA);
+            }else{
+                //incorrect, quite the game
+            }
+        }else{//ist fragmentB
+            if(pictureFragmentB.getCountry().equals(flagName)){
+                //correct, hide flags and next picture, and secondtry==true
+                second_opportunity = true;
+                pictureFragmentB.flagsLayoutVisibility(false);
+                pictureFragmentB.pictureOpacity(false);
+                nextPicture(pictureFragmentB);
+            }else{
+                //incorrect, quite the game
+            }
+        }
+    }
+
+    @Override
     public void nextPicture(PictureFragment pictureFragment) {
         if(arrayPictures.isEmpty()){
-            System.out.println("ya no hay mas imagenes");
             Toast.makeText(pictureFragment.getContext(), "Ganaste", Toast.LENGTH_SHORT).show();
         }else {
             gameView.loadNextPicture(pictureFragment, arrayPictures.get(0).toString());

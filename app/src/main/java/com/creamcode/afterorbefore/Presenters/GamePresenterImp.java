@@ -34,7 +34,7 @@ public class GamePresenterImp implements GamePresenter {
     public void setIds(ArrayList ids, String turnType) {
         arrayPictures = ids;
         this.turnType = turnType;
-        //mandandole los dos primeros ids random a la vista activity y removiendolos
+        //Sending the first two random idas to the view(Activity) and removing them
         gameView.loadQuestion(turnType);
         gameView.initializePicturesAB(arrayPictures.get(0).toString(),arrayPictures.get(1).toString());
         arrayPictures.remove(0);
@@ -44,22 +44,21 @@ public class GamePresenterImp implements GamePresenter {
     @Override
     public void checkAnswerPresenter(PictureFragment pictureFragmentA, PictureFragment pictureFragmentB, String id) {
         PictureFragment fragmentActual;
-        //identify wich fragment is calling
+        //Identifying wich fragment is calling through its id
         if(pictureFragmentA.getPictureId().equals(id)){
             fragmentActual =pictureFragmentA;
         }else{
             fragmentActual = pictureFragmentB;
         }
-        if(fragmentActual==pictureFragmentA){//ist fragmentA
-            if(turnType.equals("AFTER")){
+        if(fragmentActual==pictureFragmentA){//Ist fragmentA calling to this method
+            if(turnType.equals("AFTER")){//Its After. The question is which picture is recenter
                 if(fragmentActual.getYear()>pictureFragmentB.getYear()){
-                    //correcto
+                    //Correct, Picture A year is bigger than picture B year
                     nextPicture(pictureFragmentA);
                 }else{
-                    //incorrecto
-                    //generar flags con picture A y ocultar a B
+                    //Incorrect
+                    //Producing flags and blocking the other functions
                     if(!second_opportunity){
-                        //falta bloquear a B
                         pictureFragmentA.lockPictureFuncionality(true);
                         pictureFragmentB.lockPictureFuncionality(true);
                         pictureFragmentA.cargarFlags();
@@ -67,15 +66,14 @@ public class GamePresenterImp implements GamePresenter {
                         Toast.makeText(pictureFragmentA.getContext(), "Perdiste", Toast.LENGTH_SHORT).show();
                     }
                 }
-            }else{//its BEFORE
+            }else{//Its BEFORE. The question is which picture is older
                 if(fragmentActual.getYear()<pictureFragmentB.getYear()){
-                    //correcto
+                    //Correct, Picture A year is lower than picture B year
                     nextPicture(pictureFragmentA);
                 }else{
-                    //incorrecto
-                    //generar flags con picture A y ocultar a B
+                    //Incorrect
+                    //Producing flags and blocking the other functions
                     if(!second_opportunity){
-                        //falta bloquear a B
                         pictureFragmentA.lockPictureFuncionality(true);
                         pictureFragmentB.lockPictureFuncionality(true);
                         pictureFragmentA.cargarFlags();
@@ -85,16 +83,15 @@ public class GamePresenterImp implements GamePresenter {
 
                 }
             }
-        }else{//ist fragmentB
-            if(turnType.equals("AFTER")){
+        }else{//Ist fragmentB calling to this method
+            if(turnType.equals("AFTER")){//Its After. The question is which picture is recenter
                 if(fragmentActual.getYear()>pictureFragmentA.getYear()){
-                    //correcto
+                    //Correct, Picture B year is bigger than picture A year
                     nextPicture(pictureFragmentB);
                 }else{
-                    //incorrecto
-                    //generar flags con picture B y ocultar a A
+                    //Incorrect
+                    //Producing flags and blocking the other functions
                     if(!second_opportunity){
-                        //falta bloquear a A
                         pictureFragmentA.lockPictureFuncionality(true);
                         pictureFragmentB.lockPictureFuncionality(true);
                         pictureFragmentB.cargarFlags();
@@ -102,15 +99,14 @@ public class GamePresenterImp implements GamePresenter {
                         Toast.makeText(pictureFragmentB.getContext(), "Perdiste", Toast.LENGTH_SHORT).show();
                     }
                 }
-            }else{
+            }else{//Its BEFORE. The question is which picture is older
                 if(fragmentActual.getYear()<pictureFragmentA.getYear()){
-                    //correcto
+                    //Correct, Picture B year is lower than picture A year
                     nextPicture(pictureFragmentB);
                 }else{
-                    //incorrecto
-                    //generar flags con picture y y ocultar a A
+                    //Incorrect
+                    //Producing flags and blocking the other functions
                     if(!second_opportunity){
-                        //falta bloquear a A
                         pictureFragmentA.lockPictureFuncionality(true);
                         pictureFragmentB.lockPictureFuncionality(true);
                         pictureFragmentB.cargarFlags();
@@ -129,37 +125,35 @@ public class GamePresenterImp implements GamePresenter {
     @Override
     public void flagNameAnswer(boolean answer, String id, PictureFragment pictureFragmentA, PictureFragment pictureFragmentB) {
         PictureFragment fragmentActual;
-        //identify wich fragment is calling
+        //Identify which fragment is calling this method through its id
         if(pictureFragmentA.getPictureId().equals(id)){
             fragmentActual =pictureFragmentA;
         }else{
             fragmentActual = pictureFragmentB;
         }
-        if(fragmentActual==pictureFragmentA){//ist fragmentA
+        if(fragmentActual==pictureFragmentA){//Ist fragmentA calling to this method
             if(answer==true){
-                //correcto
-                //falta desbloquear
-                second_opportunity=true;
+                //The answer given is correct, continue with the pictures left, and unlocking all the functionalities
+                second_opportunity=true; //Advicing that the user has already failed before
                 pictureFragmentA.flagsLayoutVisibility(false);
                 pictureFragmentA.pictureOpacity(false);
                 nextPicture(pictureFragmentA);
                 pictureFragmentA.lockPictureFuncionality(false);
                 pictureFragmentB.lockPictureFuncionality(false);
             }else{
-                //incorrecto
+                //Incorrect
             }
-        }else{//ist fragmentB
+        }else{//Ist fragmentB calling to this method
             if(answer==true){
-                //correcto
-                //falta desbloquear
-                second_opportunity=true;
+                //The answer given is correct, continue with the pictures left, and unlocking all the functionalities
+                second_opportunity=true;//Advicing that the user has already failed before
                 pictureFragmentB.flagsLayoutVisibility(false);
                 pictureFragmentB.pictureOpacity(false);
                 nextPicture(pictureFragmentB);
                 pictureFragmentA.lockPictureFuncionality(false);
                 pictureFragmentB.lockPictureFuncionality(false);
             }else{
-                //incorrecto
+                //Incorrect
             }
 
         }

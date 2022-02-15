@@ -1,7 +1,9 @@
 package com.creamcode.afterorbefore.Views;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -21,7 +23,11 @@ public class GlockFragment extends Fragment {
     private Timer timer = new Timer();
     TimerTask tarea;
 
-    private int tiempoActual, tiempoRestante;
+    private final static int RESET_PHOTO = 20;
+    private final static int RESET_FLAGS = 10;
+
+    private int time = RESET_PHOTO;
+    private int timeLeft;
 
     private GlockInterface glockInterface;
 
@@ -36,6 +42,9 @@ public class GlockFragment extends Fragment {
 
         pgbGlock = v.findViewById(R.id.pgb_glock);
 
+        timeLeft = time;
+        cuentaRegresiva();
+
         return v;
     }
 
@@ -46,13 +55,13 @@ public class GlockFragment extends Fragment {
                 getActivity().runOnUiThread(new TimerTask() {
                     @Override
                     public void run() {
-                        if(tiempoActual ==0){
+                        if(time ==0){
                             pgbGlock.setProgress(0);
                             glockInterface.tiempoTermino();
                             timer.cancel();
                         }else{
-                            pgbGlock.setProgress(tiempoActual *100/ tiempoRestante);
-                            tiempoActual--;
+                            pgbGlock.setProgress(time *100/ timeLeft);
+                            time--;
                         }
                     }
                 });
@@ -60,11 +69,32 @@ public class GlockFragment extends Fragment {
         };
         timer.schedule(tarea,0,1000);
     }
-    public void cambiarTiempo(int newTime){
-        tiempoActual = newTime/1000;
-        tiempoRestante = tiempoActual;
+
+    public void resetTimePhoto(){
+        time = RESET_PHOTO;
+        timeLeft = time;
+    }
+    public void resetTimeflags(){
+        time = RESET_FLAGS;
+        timeLeft = time;
     }
     public void cancelTimer(){
         timer.cancel();
+    }
+    //Methods to match the fragment with the interface in the activity
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if(context instanceof GlockFragment.GlockInterface){
+            glockInterface = (GlockFragment.GlockInterface) context;
+        }else{
+            throw new RuntimeException(context.toString());
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        glockInterface = null;
     }
 }

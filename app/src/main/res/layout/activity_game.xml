@@ -23,6 +23,12 @@
         android:text="example"
         android:textSize="24dp"
         android:textColor="@color/theme_dark_pink" />
+    <FrameLayout
+        android:id="@+id/fl_glock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+         />
 
     <FrameLayout
         android:id="@+id/fl_picture_b"

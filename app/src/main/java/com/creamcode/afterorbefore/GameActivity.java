@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.creamcode.afterorbefore.Interfaces.GamePresenter;
 import com.creamcode.afterorbefore.Interfaces.GameView;
 import com.creamcode.afterorbefore.Presenters.GamePresenterImp;
+import com.creamcode.afterorbefore.Views.GlockFragment;
 import com.creamcode.afterorbefore.Views.PictureFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -33,10 +34,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class GameActivity extends AppCompatActivity implements GameView, PictureFragment.PictureFragmentInterface {
+public class GameActivity extends AppCompatActivity implements GameView, PictureFragment.PictureFragmentInterface, GlockFragment.GlockInterface {
 
     GamePresenter gamePresenter;
     PictureFragment pictureFragmentA, pictureFragmentB;
+    GlockFragment glockFragment;
 
     TextView tv_question;
 
@@ -67,8 +69,10 @@ public class GameActivity extends AppCompatActivity implements GameView, Picture
         bundleB.putString("id",idB);
         pictureFragmentB.setArguments(bundleB);
 
+        glockFragment = new GlockFragment();
+
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fl_picture_a,pictureFragmentA).replace(R.id.fl_picture_b,pictureFragmentB).commit();
+        fragmentTransaction.replace(R.id.fl_picture_a,pictureFragmentA).replace(R.id.fl_picture_b,pictureFragmentB).replace(R.id.fl_glock,glockFragment).commit();
 
     }
 
@@ -108,4 +112,8 @@ public class GameActivity extends AppCompatActivity implements GameView, Picture
         }
     }
 
+    @Override
+    public void tiempoTermino() {
+        Toast.makeText(this,"Time out",Toast.LENGTH_SHORT).show();
+    }
 }

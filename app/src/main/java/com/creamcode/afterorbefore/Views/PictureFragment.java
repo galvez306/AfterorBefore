@@ -101,6 +101,10 @@ public class PictureFragment extends Fragment implements PictureView {
     public void lockPictureFuncionality(boolean lock){
         presenter.lockingPicture(lock);
     }
+    public void infoPictureVisibility(){
+        tvCountry.setVisibility(View.VISIBLE);
+        tvYear.setVisibility(View.VISIBLE);
+    }
 
     public String getPictureId() {
         return presenter.getPictureId();

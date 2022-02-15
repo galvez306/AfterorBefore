@@ -43,6 +43,7 @@
         <TextView
             android:id="@+id/tv_year_picture"
             android:layout_width="wrap_content"
+            android:visibility="invisible"
             android:layout_height="wrap_content"
             android:layout_marginTop="88dp"
             android:text="year"
@@ -63,6 +64,7 @@
             android:textColor="@color/theme_dark_pink"
             android:textStyle="bold"
             android:textSize="40dp"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

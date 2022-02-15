@@ -110,6 +110,12 @@ public class GameActivity extends AppCompatActivity implements GameView, Picture
         }
     }
 
+    @Override
+    public void killTime() {
+        glockFragment.cancelTimer();
+    }
+
+
     public void FullScreencall() {
         if(Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) { // lower api
             View v = this.getWindow().getDecorView();
@@ -130,14 +136,13 @@ public class GameActivity extends AppCompatActivity implements GameView, Picture
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        glockFragment.cancelTimer();
+        killTime();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        //Care with this
-        glockFragment.cancelTimer();
+        killTime();
         finish();
     }
 }

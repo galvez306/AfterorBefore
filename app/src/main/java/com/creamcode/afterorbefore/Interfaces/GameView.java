@@ -9,4 +9,5 @@ public interface GameView {
     void loadNextPicture(PictureFragment pictureFragment, String id);
     void loadQuestion(String question);
     void changeTime(String timeType);
+    void killTime();
 }

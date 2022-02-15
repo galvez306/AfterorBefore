@@ -2,7 +2,10 @@ package com.creamcode.afterorbefore.Presenters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.CountDownTimer;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.creamcode.afterorbefore.Interactors.GameInteractorImp;
 import com.creamcode.afterorbefore.Interfaces.GameInteractor;
@@ -68,7 +71,7 @@ public class GamePresenterImp implements GamePresenter {
                         pictureFragmentB.lockPictureFuncionality(true);
                         pictureFragmentA.cargarFlags();
                     }else{
-                        Toast.makeText(pictureFragmentA.getContext(), "Perdiste", Toast.LENGTH_SHORT).show();
+                        showInfo(fragmentActual);
                     }
                 }
             }else{//Its BEFORE. The question is which picture is older
@@ -84,7 +87,7 @@ public class GamePresenterImp implements GamePresenter {
                         pictureFragmentB.lockPictureFuncionality(true);
                         pictureFragmentA.cargarFlags();
                     }else{
-                        Toast.makeText(pictureFragmentB.getContext(), "Perdiste", Toast.LENGTH_SHORT).show();
+                        showInfo(fragmentActual);
                     }
 
                 }
@@ -103,8 +106,7 @@ public class GamePresenterImp implements GamePresenter {
                         pictureFragmentB.lockPictureFuncionality(true);
                         pictureFragmentB.cargarFlags();
                     }else{
-                        Toast.makeText(pictureFragmentB.getContext(), "Perdiste", Toast.LENGTH_SHORT).show();
-                        finishGame(points);
+                        showInfo(fragmentActual);
                     }
                 }
             }else{//Its BEFORE. The question is which picture is older
@@ -120,8 +122,7 @@ public class GamePresenterImp implements GamePresenter {
                         pictureFragmentB.lockPictureFuncionality(true);
                         pictureFragmentB.cargarFlags();
                     }else{
-                        Toast.makeText(pictureFragmentB.getContext(), "Perdiste", Toast.LENGTH_SHORT).show();
-                        finishGame(points);
+                        showInfo(fragmentActual);
                     }
 
                 }
@@ -152,7 +153,8 @@ public class GamePresenterImp implements GamePresenter {
                 pictureFragmentB.lockPictureFuncionality(false);
             }else{
                 //Incorrect
-                finishGame(points);
+                pictureFragmentA.flagsLayoutVisibility(false);
+                showInfo(fragmentActual);
             }
         }else{//Ist fragmentB calling to this method
             if(answer==true){
@@ -165,7 +167,8 @@ public class GamePresenterImp implements GamePresenter {
                 pictureFragmentB.lockPictureFuncionality(false);
             }else{
                 //Incorrect
-                finishGame(points);
+                pictureFragmentB.flagsLayoutVisibility(false);
+                showInfo(fragmentActual);
             }
 
         }
@@ -176,8 +179,6 @@ public class GamePresenterImp implements GamePresenter {
     public void nextPicture(PictureFragment pictureFragment) {
         points++;
         if(arrayPictures.isEmpty()){
-
-            Toast.makeText(pictureFragment.getContext(), "Ganaste", Toast.LENGTH_SHORT).show();
             finishGame(points);
         }else {
             gameView.changeTime("Photo");
@@ -189,8 +190,24 @@ public class GamePresenterImp implements GamePresenter {
     }
 
     @Override
+    public void showInfo(PictureFragment pictureFragment) {
+        gameView.killTime();
+        pictureFragment.infoPictureVisibility();
+        new CountDownTimer(3000, 1000) {
+            public void onFinish() {
+                finishGame(points);
+            }
+            public void onTick(long millisUntilFinished) {
+            }
+        }.start();
+
+    }
+
+
+    @Override
     public void finishGame(int aciertos) {
         Intent intent = new Intent((Context) gameView, ResultAcivity.class);
+        intent.putExtra("SCORE",points);
         ((Context) gameView).startActivity(intent);
     }
 

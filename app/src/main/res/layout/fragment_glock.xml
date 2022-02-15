@@ -10,7 +10,7 @@
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:progressDrawable="@drawable/background_progressbar_glock"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="32dp"
         android:indeterminate="false"
         android:indeterminateTint="@color/white"
         android:background="@color/black"/>

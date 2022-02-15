@@ -11,9 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AfterOrBefore">
-        <activity android:name=".ResultAcivity"></activity>
-        <activity android:name=".Views.ResultActivity" />
-        <activity android:name=".GameActivity" />
+        <activity android:name=".ResultAcivity"
+            ></activity>
+        <activity android:name=".GameActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

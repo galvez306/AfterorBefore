@@ -5,36 +5,47 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-
+    android:background="@color/black"
     tools:context=".GameActivity">
 
     <FrameLayout
         android:id="@+id/fl_picture_a"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/black"
-        android:layout_weight="1" />
 
-    <TextView
+        android:layout_weight="1" />
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_question"
-        android:gravity="center_horizontal"
-        android:text="example"
-        android:textSize="24dp"
-        android:textColor="@color/theme_dark_pink" />
-    <FrameLayout
-        android:id="@+id/fl_glock"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/black"
-         />
+        android:layout_height="wrap_content">
+        <FrameLayout
+            android:id="@+id/fl_glock"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/tv_question"
+            android:gravity="center_horizontal"
+            android:text="example"
+            android:textStyle="bold"
+            android:textColor="@color/theme_yellow"
+            android:textSize="36dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <FrameLayout
         android:id="@+id/fl_picture_b"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/black"
+
         android:layout_weight="1" />
 
 </LinearLayout>

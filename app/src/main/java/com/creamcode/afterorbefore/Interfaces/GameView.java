@@ -8,4 +8,5 @@ public interface GameView {
     void initializePicturesAB(String idA, String idB);
     void loadNextPicture(PictureFragment pictureFragment, String id);
     void loadQuestion(String question);
+    void changeTime(String timeType);
 }

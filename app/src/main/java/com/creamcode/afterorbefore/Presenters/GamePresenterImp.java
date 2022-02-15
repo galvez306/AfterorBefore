@@ -1,11 +1,14 @@
 package com.creamcode.afterorbefore.Presenters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.widget.Toast;
 
 import com.creamcode.afterorbefore.Interactors.GameInteractorImp;
 import com.creamcode.afterorbefore.Interfaces.GameInteractor;
 import com.creamcode.afterorbefore.Interfaces.GamePresenter;
 import com.creamcode.afterorbefore.Interfaces.GameView;
+import com.creamcode.afterorbefore.ResultAcivity;
 import com.creamcode.afterorbefore.Views.PictureFragment;
 
 import java.util.ArrayList;
@@ -15,6 +18,7 @@ public class GamePresenterImp implements GamePresenter {
     private GameView gameView;
     private GameInteractor gameInteractor;
 
+    private int points = 0;
     private String turnType;
     private boolean second_opportunity = false;
 
@@ -59,6 +63,7 @@ public class GamePresenterImp implements GamePresenter {
                     //Incorrect
                     //Producing flags and blocking the other functions
                     if(!second_opportunity){
+                        gameView.changeTime("Flag");
                         pictureFragmentA.lockPictureFuncionality(true);
                         pictureFragmentB.lockPictureFuncionality(true);
                         pictureFragmentA.cargarFlags();
@@ -74,6 +79,7 @@ public class GamePresenterImp implements GamePresenter {
                     //Incorrect
                     //Producing flags and blocking the other functions
                     if(!second_opportunity){
+                        gameView.changeTime("Flag");
                         pictureFragmentA.lockPictureFuncionality(true);
                         pictureFragmentB.lockPictureFuncionality(true);
                         pictureFragmentA.cargarFlags();
@@ -92,11 +98,13 @@ public class GamePresenterImp implements GamePresenter {
                     //Incorrect
                     //Producing flags and blocking the other functions
                     if(!second_opportunity){
+                        gameView.changeTime("Flag");
                         pictureFragmentA.lockPictureFuncionality(true);
                         pictureFragmentB.lockPictureFuncionality(true);
                         pictureFragmentB.cargarFlags();
                     }else{
                         Toast.makeText(pictureFragmentB.getContext(), "Perdiste", Toast.LENGTH_SHORT).show();
+                        finishGame(points);
                     }
                 }
             }else{//Its BEFORE. The question is which picture is older
@@ -107,11 +115,13 @@ public class GamePresenterImp implements GamePresenter {
                     //Incorrect
                     //Producing flags and blocking the other functions
                     if(!second_opportunity){
+                        gameView.changeTime("Flag");
                         pictureFragmentA.lockPictureFuncionality(true);
                         pictureFragmentB.lockPictureFuncionality(true);
                         pictureFragmentB.cargarFlags();
                     }else{
                         Toast.makeText(pictureFragmentB.getContext(), "Perdiste", Toast.LENGTH_SHORT).show();
+                        finishGame(points);
                     }
 
                 }
@@ -142,6 +152,7 @@ public class GamePresenterImp implements GamePresenter {
                 pictureFragmentB.lockPictureFuncionality(false);
             }else{
                 //Incorrect
+                finishGame(points);
             }
         }else{//Ist fragmentB calling to this method
             if(answer==true){
@@ -154,6 +165,7 @@ public class GamePresenterImp implements GamePresenter {
                 pictureFragmentB.lockPictureFuncionality(false);
             }else{
                 //Incorrect
+                finishGame(points);
             }
 
         }
@@ -162,14 +174,24 @@ public class GamePresenterImp implements GamePresenter {
 
     @Override
     public void nextPicture(PictureFragment pictureFragment) {
+        points++;
         if(arrayPictures.isEmpty()){
+
             Toast.makeText(pictureFragment.getContext(), "Ganaste", Toast.LENGTH_SHORT).show();
+            finishGame(points);
         }else {
+            gameView.changeTime("Photo");
             gameView.loadNextPicture(pictureFragment, arrayPictures.get(0).toString());
             arrayPictures.remove(0);
             this.turnType = gameInteractor.newQuestion();
             gameView.loadQuestion(this.turnType);
         }
+    }
+
+    @Override
+    public void finishGame(int aciertos) {
+        Intent intent = new Intent((Context) gameView, ResultAcivity.class);
+        ((Context) gameView).startActivity(intent);
     }
 
 }

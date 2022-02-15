@@ -10,4 +10,5 @@ public interface GamePresenter {
     void checkAnswerPresenter(PictureFragment pictureFragmentA, PictureFragment pictureFragmentB, String id);
     void flagNameAnswer(boolean answer, String id, PictureFragment pictureFragmentA, PictureFragment pictureFragmentB);
     void nextPicture(PictureFragment pictureFragment);
+    void finishGame(int aciertos);
 }

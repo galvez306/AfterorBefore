@@ -100,6 +100,16 @@ public class GameActivity extends AppCompatActivity implements GameView, Picture
         tv_question.setText(question);
     }
 
+    @Override
+    public void changeTime(String timeType) {
+        if(timeType.equals("Photo")){
+           glockFragment.resetTimePhoto();
+        }
+        if(timeType.equals("Flag")){
+            glockFragment.resetTimeflags();
+        }
+    }
+
     public void FullScreencall() {
         if(Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) { // lower api
             View v = this.getWindow().getDecorView();
@@ -114,6 +124,20 @@ public class GameActivity extends AppCompatActivity implements GameView, Picture
 
     @Override
     public void tiempoTermino() {
-        Toast.makeText(this,"Time out",Toast.LENGTH_SHORT).show();
+        gamePresenter.finishGame(0);
+    }
+    //ActivityLifeCycle
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        glockFragment.cancelTimer();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //Care with this
+        glockFragment.cancelTimer();
+        finish();
     }
 }

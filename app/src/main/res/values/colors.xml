@@ -8,7 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="theme_pink">#F77697</color>
     <color name="theme_yellow">#F6D347</color>
     <color name="theme_blue">#33C1D6</color>
     <color name="theme_purple">#511F74</color>
@@ -16,5 +15,15 @@
     <color name="theme_lime">#B8EF49</color>
     <color name="theme_red">#FF004A</color>
     <color name="theme_dark_pink">#BC668D</color>
+
+
+    <color name="azul">#BBCBD8</color>
+
+    //se queda
+    <color name="theme_pink">#F77697</color>
+    <color name="theme_brown">#504D49</color>
+    <color name="menta">#03FDC7</color>
+    <color name="red">#E93658</color>
+    <color name="theme_beige">#F3E4CE</color>
 
 </resources>

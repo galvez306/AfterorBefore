@@ -10,9 +10,9 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/main_layout"
         android:padding="5dp">
 
         <ImageView
@@ -29,10 +29,11 @@
             android:id="@+id/tv_id_picture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/robotouno"
             android:text="ID"
-            android:textColor="@color/theme_dark_pink"
+            android:textColor="@color/theme_pink"
+            android:textSize="8dp"
             android:textStyle="bold"
-            android:textSize="40dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.04"
@@ -43,16 +44,16 @@
         <TextView
             android:id="@+id/tv_year_picture"
             android:layout_width="wrap_content"
-            android:visibility="invisible"
             android:layout_height="wrap_content"
-            android:layout_marginTop="88dp"
+            android:layout_marginTop="152dp"
+            android:fontFamily="@font/robotouno"
             android:text="year"
-            android:textColor="@color/theme_dark_pink"
-            android:textStyle="bold"
+            android:textColor="@color/theme_pink"
             android:textSize="40dp"
-
+            android:textStyle="bold"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.527"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -60,20 +61,22 @@
             android:id="@+id/tv_country_picture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="country"
-            android:textColor="@color/theme_dark_pink"
-            android:textStyle="bold"
-            android:textSize="40dp"
+            android:fontFamily="@font/robotouno"
             android:visibility="invisible"
+            android:text="country"
+            android:textColor="@color/theme_pink"
+            android:textSize="40dp"
+            android:textStyle="bold"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.967" />
-
+            app:layout_constraintVertical_bias="0.666" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -84,11 +87,11 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:id="@+id/flags_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:gravity="center_horizontal"
-            android:id="@+id/flags_layout"
+            android:orientation="vertical"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -101,15 +104,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Where was the picture taken?"
-                android:textColor="@color/white"
-                android:textSize="24dp"/>
+                android:textColor="@color/theme_beige"
+                android:fontFamily="@font/robotouno"
+                android:textSize="24dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/btn_flag_one"

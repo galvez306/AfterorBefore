@@ -11,7 +11,7 @@
     <FrameLayout
         android:id="@+id/fl_picture_a"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
 
         android:layout_weight="1" />
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -45,7 +45,7 @@
     <FrameLayout
         android:id="@+id/fl_picture_b"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
 
         android:layout_weight="1" />
 

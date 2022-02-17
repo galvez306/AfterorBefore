@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -144,5 +145,19 @@ public class GameActivity extends AppCompatActivity implements GameView, Picture
         super.onStop();
         killTime();
         finish();
+    }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent);// avisar reinicio
+        } else {
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent);
+        }
     }
 }

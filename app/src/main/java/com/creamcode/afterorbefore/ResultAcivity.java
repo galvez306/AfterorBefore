@@ -34,7 +34,8 @@ public class ResultAcivity extends AppCompatActivity {
         listViewScores = findViewById(R.id.lstv_scores);
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String [] nameScore = {sharedPreferences.getString("name","no name"),"10"};
+        String [] nameScore = {sharedPreferences.getString("nameUno","no name"),"10"};
+        String [] nameScoreDos = {sharedPreferences.getString("nameDos","no name"),"10"};
 
         tv_prueba = findViewById(R.id.tv_result);
         score = getIntent().getExtras().getInt("SCORE");

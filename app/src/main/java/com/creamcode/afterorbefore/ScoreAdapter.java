@@ -10,20 +10,28 @@ import android.widget.TextView;
 import com.google.protobuf.StringValue;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ScoreAdapter extends BaseAdapter {
     Context context;
-    ArrayList<String[]> arrayListst;
+    ArrayList<ResultAcivity.Score> scores;
 
-    public ScoreAdapter(Context context, ArrayList<String[]> arrayListst) {
+    public ScoreAdapter(Context context, ArrayList<ResultAcivity.Score> scores) {
         this.context = context;
-        this.arrayListst = arrayListst;
+        this.scores = scores;
+        try {
+            Collections.sort(scores, (s1, s2) ->
+                    Integer.compare(s2.points, s1.points));
+        }catch (Exception e){
+
+        }
+
     }
 
     @Override
     public int getCount() {
-        return arrayListst.size();
+        return scores.size();
     }
 
     @Override
@@ -46,8 +54,8 @@ public class ScoreAdapter extends BaseAdapter {
         tvName = view.findViewById(R.id.tv_name);
         tvScore = view.findViewById(R.id.tv_score);
 
-        tvName.setText(arrayListst.get(i)[0]);
-        tvScore.setText(arrayListst.get(i)[1]);
+        tvName.setText(scores.get(i).toString());
+        /*tvScore.setText(arrayListst.get(i)[1]);*/
 
         return view;
     }

@@ -20,18 +20,18 @@ public class ScoreAdapter extends BaseAdapter {
     public ScoreAdapter(Context context, ArrayList<ResultAcivity.Score> scores) {
         this.context = context;
         this.scores = scores;
-        try {
-            Collections.sort(scores, (s1, s2) ->
-                    Integer.compare(s2.points, s1.points));
-        }catch (Exception e){
-
-        }
 
     }
 
     @Override
     public int getCount() {
-        return scores.size();
+        int size=0;
+        for(int i = 0; i<scores.size(); i++){
+            if(scores.get(i).name!=null){
+                size++;
+            }
+        }
+        return size;
     }
 
     @Override
@@ -53,10 +53,10 @@ public class ScoreAdapter extends BaseAdapter {
         }
         tvName = view.findViewById(R.id.tv_name);
         tvScore = view.findViewById(R.id.tv_score);
-
-        tvName.setText(scores.get(i).toString());
-        /*tvScore.setText(arrayListst.get(i)[1]);*/
-
+        if(scores.get(i).name!=null){
+            tvName.setText(scores.get(i).name);
+            tvScore.setText(String.valueOf(scores.get(i).points));
+        }
         return view;
     }
 }

@@ -1,23 +1,26 @@
 package com.creamcode.afterorbefore;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 
 public class ResultAcivity extends AppCompatActivity {
@@ -26,9 +29,10 @@ public class ResultAcivity extends AppCompatActivity {
     private ListView listViewScores;
 
     private SharedPreferences sharedPreferences;
+    private Gson gson;
 
-    private TextView tv_prueba;
-    private int score = 0;
+    private boolean hasNull = false, newRecord = false;
+    private int gameScore = 0;
 
     ArrayList<Score> scores = new ArrayList<>();
 
@@ -41,11 +45,6 @@ public class ResultAcivity extends AppCompatActivity {
             this.points = points;
         }
 
-        @Override
-        public String toString() {
-            return "NOMBREE "+name+"PUNTOS "+points;
-        }
-
     }
 
     @Override
@@ -56,86 +55,48 @@ public class ResultAcivity extends AppCompatActivity {
         btnAgain = findViewById(R.id.btn_again);
         listViewScores = findViewById(R.id.lstv_scores);
 
-        tv_prueba = findViewById(R.id.tv_result);
-        score = getIntent().getExtras().getInt("SCORE");
-        tv_prueba.setText("tu puntaje es de: "+score);
+        gameScore = getIntent().getExtras().getInt("SCORE");
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        Gson gson = new Gson();
+        gson = new Gson();
+        Score plyr = new Score(null,-1);
+        String playDefault = gson.toJson(plyr);
 
-        Score userOne = gson.fromJson(sharedPreferences.getString("user1",""),Score.class);
-        Score userTwo = gson.fromJson(sharedPreferences.getString("user2",""),Score.class);
-        Score userThree = gson.fromJson(sharedPreferences.getString("user3",""),Score.class);
-        Score userFour = gson.fromJson(sharedPreferences.getString("user4",""),Score.class);
-        Score userFive = gson.fromJson(sharedPreferences.getString("user5",""),Score.class);
+        //Getting the leaderboard
+        Score userOne = gson.fromJson(sharedPreferences.getString("user1",playDefault),Score.class);
+        Score userTwo = gson.fromJson(sharedPreferences.getString("user2",playDefault),Score.class);
+        Score userThree = gson.fromJson(sharedPreferences.getString("user3",playDefault),Score.class);
+        Score userFour = gson.fromJson(sharedPreferences.getString("user4",playDefault),Score.class);
+        Score userFive = gson.fromJson(sharedPreferences.getString("user5",playDefault),Score.class);
 
-        /*scores.add(userOne);
-        scores.add(userTwo);
-        scores.add(userThree);
-        scores.add(userFour);
-        scores.add(userFive);*/
+        scores = new ArrayList<>(Arrays.asList(userOne,userTwo,userThree,userFour,userFive));
 
-        Score edy = new Score("Eduardo",7);
-        Score gaby = new Score("Gabriela",5);
-        Score ramona = new Score("Ramona",10);
-        Score calcetas = new Score("Calcetungas",2);
-        Score chispa = new Score("Chispa",12);
-
-        scores.add(edy);
-        scores.add(gaby);
-        scores.add(ramona);
-        scores.add(calcetas);
-        scores.add(chispa);
-        scores();
-
-        //ordenar el arreglo scores y mandarlos al adapter ya en orden, o talvez en el adapter tener la logica para acomodarlos
-
-
-        /*Score edy = new Score("Eduardo",7);
-        Score gaby = new Score("Gabriela",5);
-        Score ramona = new Score("Ramona",10);
-        Score calcetas = new Score("Calcetungas",2);
-        Score chispa = new Score("Chispa",12);
-
-        Gson gson = new Gson();
-
-        String json1 = gson.toJson(edy);
-        String json2 = gson.toJson(gaby);
-        String json3 = gson.toJson(ramona);
-        String json4 = gson.toJson(calcetas);
-        String json5 = gson.toJson(chispa);
-
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("user1",json1);
-        editor.putString("user2",json2);
-        editor.putString("user3",json3);
-        editor.putString("user4",json4);
-        editor.putString("user5",json5);
-        editor.apply();
-
-        String impresion="";
-        impresion +=sharedPreferences.getString("user1","");
-        impresion +=sharedPreferences.getString("user2","");
-        impresion +=sharedPreferences.getString("user3","");
-        impresion +=sharedPreferences.getString("user4","");
-        impresion +=sharedPreferences.getString("user5","");
-
-        System.out.println(impresion);
-
-        Score vuletodelfuturo = gson.fromJson(json3,Score.class);
-        System.out.println(vuletodelfuturo.toString());*/
-
-       /* namesAndScores = new ArrayList<String[]>();
-        namesAndScores.add(nameScore);
-        namesAndScores.add(nameScore);
-        namesAndScores.add(nameScore);
-        namesAndScores.add(nameScore);
-        namesAndScores.add(nameScore);
-        namesAndScores.add(nameScore);
-
-        scores();*/
-
+        //Reading the array to see if this is one o the 5 first times the user play the game
+        for(int i=0; i<scores.size(); i++){
+            if(scores.get(i).name==null){
+                hasNull = true;
+            }else{
+                hasNull = false;
+            }
+        }
+        if(hasNull){
+            //At least, there ir a null score in the array
+            newScore();
+        }else{
+            //There is no one null score in the array
+            //If the game score is higher than one of the array, show the dialog
+            for(int i=0; i<scores.size(); i++){
+                if(gameScore >=scores.get(i).points){
+                    newRecord = true;
+                    newScore();
+                    break;
+                }
+            }
+            if(!newRecord){
+                getScores();
+            }
+        }
 
         btnAgain.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,10 +107,72 @@ public class ResultAcivity extends AppCompatActivity {
         });
 
     }
+    public void newScore(){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(ResultAcivity.this);
+        View customLayout = getLayoutInflater().inflate(R.layout.dialog_new_score, null);
+        alertDialog.setView(customLayout);
+        AlertDialog alert = alertDialog.create();
+        alert.setCanceledOnTouchOutside(true);
+        alert.show();
+        alert.setOnCancelListener(
+                new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        getScores();
+                    }
+                }
+        );
+        EditText edtName = customLayout.findViewById(R.id.edt_name);
+        Button submit = customLayout.findViewById(R.id.btn_new_score);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = edtName.getText().toString().trim();
+                if(name.equals("")){
+                    Toast.makeText(ResultAcivity.this, "Name can not be empty", Toast.LENGTH_SHORT).show();
+                }else{
+                    if(name.length()>14){
+                        Toast.makeText(ResultAcivity.this, "Name too large", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Score sc = new Score(name, gameScore);
+                        scores.add(sc);
+                        getScores();
+                        alert.dismiss();
+                    }
+                }
+            }
+        });
 
-    private void scores(){
+    }
+    private void getScores(){
+        sortScores(scores);
+
+        String json1 = gson.toJson(scores.get(0));
+        String json2 = gson.toJson(scores.get(1));
+        String json3 = gson.toJson(scores.get(2));
+        String json4 = gson.toJson(scores.get(3));
+        String json5 = gson.toJson(scores.get(4));
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("user1",json1);
+        editor.putString("user2",json2);
+        editor.putString("user3",json3);
+        editor.putString("user4",json4);
+        editor.putString("user5",json5);
+        editor.apply();
+
         ScoreAdapter adapter = new ScoreAdapter(this,scores);
         listViewScores.setAdapter(adapter);
+    }
+
+    public void sortScores(ArrayList<Score> arrayList){
+        try {
+            Collections.sort(arrayList, (s1, s2) ->
+                    Integer.compare(s2.points, s1.points));
+            arrayList.remove(5);
+        }catch (Exception e){
+
+        }
     }
     @Override
     protected void onStop() {

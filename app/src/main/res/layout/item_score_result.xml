@@ -12,7 +12,7 @@
         android:text="user"
         android:textAllCaps="true"
         android:textColor="@color/theme_pink"
-        android:textSize="28dp" />
+        android:textSize="22dp" />
 
     <TextView
         android:id="@+id/tv_score"
@@ -23,5 +23,5 @@
         android:gravity="right"
         android:text=""
         android:textColor="@color/theme_pink"
-        android:textSize="28dp" />
+        android:textSize="22dp" />
 </LinearLayout>

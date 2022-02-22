@@ -67,6 +67,7 @@ public class PictureFragment extends Fragment implements PictureView {
         String id = bundle.getString("id");
 
         presenter = new PicturePresenterImp(this);
+        lockPictureFuncionality(true);
         presenter.getPhotoData(id);
 
         mainLyt.setOnClickListener(new View.OnClickListener() {
@@ -158,6 +159,7 @@ public class PictureFragment extends Fragment implements PictureView {
     @Override
     public void loadUrl(String url) {
         Glide.with(getContext()).load(url).into(imvPicture);
+        lockPictureFuncionality(false);
     }
 
     @Override

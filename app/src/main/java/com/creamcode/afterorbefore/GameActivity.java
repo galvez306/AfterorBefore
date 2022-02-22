@@ -159,5 +159,6 @@ public class GameActivity extends AppCompatActivity implements GameView, Picture
             finish();
             startActivity(intent);
         }
+        Toast.makeText(this,"Game restarted",Toast.LENGTH_SHORT).show();
     }
 }

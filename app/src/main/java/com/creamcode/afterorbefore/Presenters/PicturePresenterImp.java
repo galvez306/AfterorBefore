@@ -1,18 +1,13 @@
 package com.creamcode.afterorbefore.Presenters;
 
-import android.view.View;
-import android.widget.Toast;
+
 
 import com.creamcode.afterorbefore.Interactors.PictureInteractorImp;
 import com.creamcode.afterorbefore.Interfaces.PictureInteractor;
 import com.creamcode.afterorbefore.Interfaces.PicturePresenter;
 import com.creamcode.afterorbefore.Interfaces.PictureView;
-
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+
 
 public class PicturePresenterImp implements PicturePresenter {
 

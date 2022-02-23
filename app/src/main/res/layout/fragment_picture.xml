@@ -62,11 +62,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/robotouno"
-            android:visibility="invisible"
             android:text="country"
             android:textColor="@color/theme_pink"
             android:textSize="40dp"
             android:textStyle="bold"
+            android:visibility="invisible"
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -103,9 +103,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Where was the picture taken?"
-                android:textColor="@color/theme_beige"
                 android:fontFamily="@font/robotouno"
+                android:gravity="center_horizontal"
+                android:text="@string/seleccionar_bandera"
+                android:textColor="@color/theme_beige"
                 android:textSize="24dp" />
 
             <LinearLayout

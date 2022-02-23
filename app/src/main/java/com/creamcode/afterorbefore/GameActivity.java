@@ -34,6 +34,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class GameActivity extends AppCompatActivity implements GameView, PictureFragment.PictureFragmentInterface, GlockFragment.GlockInterface {
 
@@ -98,7 +99,12 @@ public class GameActivity extends AppCompatActivity implements GameView, Picture
 
     @Override
     public void loadQuestion(String question) {
-        tv_question.setText(question);
+        if(question.equals("AFTER")){
+            tv_question.setText(R.string.despues);
+        }else{
+            tv_question.setText(R.string.antes);
+        }
+
     }
 
     @Override
@@ -159,6 +165,6 @@ public class GameActivity extends AppCompatActivity implements GameView, Picture
             finish();
             startActivity(intent);
         }
-        Toast.makeText(this,"Game restarted",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,R.string.reinicio,Toast.LENGTH_SHORT).show();
     }
 }

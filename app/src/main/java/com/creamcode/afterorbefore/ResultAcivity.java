@@ -129,10 +129,10 @@ public class ResultAcivity extends AppCompatActivity {
             public void onClick(View v) {
                 String name = edtName.getText().toString().trim();
                 if(name.equals("")){
-                    Toast.makeText(ResultAcivity.this, "Name can not be empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ResultAcivity.this, R.string.nombre_vacio, Toast.LENGTH_SHORT).show();
                 }else{
                     if(name.length()>14){
-                        Toast.makeText(ResultAcivity.this, "Name too large", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ResultAcivity.this, R.string.nombre_largo, Toast.LENGTH_SHORT).show();
                     }else{
                         Score sc = new Score(name, gameScore);
                         scores.add(sc);

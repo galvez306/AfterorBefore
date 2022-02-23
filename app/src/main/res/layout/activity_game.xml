@@ -31,7 +31,7 @@
             android:id="@+id/tv_question"
             android:fontFamily="@font/robotouno"
             android:gravity="center_horizontal"
-            android:text="example"
+            android:text="@string/bienvenida"
             android:textStyle="bold"
             android:textColor="@color/theme_beige"
             android:textSize="32dp"

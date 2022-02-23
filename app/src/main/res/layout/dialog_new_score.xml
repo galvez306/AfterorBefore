@@ -14,7 +14,7 @@
         android:layout_marginEnd="10dp"
         android:background="@drawable/background_white_edittext"
         android:fontFamily="@font/robotouno"
-        android:hint="name"
+        android:hint="@string/nombre_puntaje"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="28dp" />

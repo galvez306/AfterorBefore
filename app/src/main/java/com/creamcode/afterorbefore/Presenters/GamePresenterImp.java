@@ -15,6 +15,7 @@ import com.creamcode.afterorbefore.ResultAcivity;
 import com.creamcode.afterorbefore.Views.PictureFragment;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class GamePresenterImp implements GamePresenter {
 
@@ -42,10 +43,19 @@ public class GamePresenterImp implements GamePresenter {
         arrayPictures = ids;
         this.turnType = turnType;
         //Sending the first two random idas to the view(Activity) and removing them
-        gameView.loadQuestion(turnType);
-        gameView.initializePicturesAB(arrayPictures.get(0).toString(),arrayPictures.get(1).toString());
-        arrayPictures.remove(0);
-        arrayPictures.remove(0);
+        //Delay to let the user read the instructions
+        new CountDownTimer(2000, 1000) {
+            public void onFinish()
+            {
+                gameView.loadQuestion(turnType);
+                gameView.initializePicturesAB(arrayPictures.get(0).toString(),arrayPictures.get(1).toString());
+                arrayPictures.remove(0);
+                arrayPictures.remove(0);
+            }
+            public void onTick(long millisUntilFinished) {
+            }
+        }.start();
+
     }
 
     @Override
@@ -193,7 +203,7 @@ public class GamePresenterImp implements GamePresenter {
     public void showInfo(PictureFragment pictureFragment) {
         gameView.killTime();
         pictureFragment.infoPictureVisibility();
-        new CountDownTimer(3000, 1000) {
+        new CountDownTimer(2000, 1000) {
             public void onFinish() {
                 finishGame(points);
             }

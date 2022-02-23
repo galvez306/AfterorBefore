@@ -2,4 +2,18 @@
     <string name="app_name">AfterOrBefore</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="iniciar">INICIAR</string>
+
+    <string name="bienvenida">¿Qué fotografía fue tomada antes o después?</string>
+    <string name="antes">ANTES</string>
+    <string name="despues">DESPUÉS</string>
+    <string name="seleccionar_bandera">¿En dónde fue tomada esta fotografía?</string>
+    <string name="reinicio">Juego reiniciado</string>
+
+    <string name="marcador">Puntajes</string>
+    <string name="nombre_puntaje">NOMBRE</string>
+    <string name="nombre_vacio">El nombre no puede estar vacío</string>
+    <string name="nombre_largo">El nombre es demasiado largo</string>
+
 </resources>

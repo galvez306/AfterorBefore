@@ -95,7 +95,7 @@ public class PictureInteractorImp implements PictureInteractor {
         }
 
         //waiting for the data
-        new CountDownTimer(400, 1000) {
+        new CountDownTimer(800, 1000) {
             public void onFinish()
             {
                 //disording the flags to implement randomity

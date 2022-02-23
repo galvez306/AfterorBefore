@@ -71,30 +71,34 @@ public class ResultAcivity extends AppCompatActivity {
         Score userFive = gson.fromJson(sharedPreferences.getString("user5",playDefault),Score.class);
 
         scores = new ArrayList<>(Arrays.asList(userOne,userTwo,userThree,userFour,userFive));
+        if(gameScore == -1){//This condition indicates that the user comes from the home activity to see the leaderboard
+            getScores();
+        }else {
 
-        //Reading the array to see if this is one o the 5 first times the user play the game
-        for(int i=0; i<scores.size(); i++){
-            if(scores.get(i).name==null){
-                hasNull = true;
-            }else{
-                hasNull = false;
-            }
-        }
-        if(hasNull){
-            //At least, there ir a null score in the array
-            newScore();
-        }else{
-            //There is no one null score in the array
-            //If the game score is higher than one of the array, show the dialog
-            for(int i=0; i<scores.size(); i++){
-                if(gameScore >=scores.get(i).points){
-                    newRecord = true;
-                    newScore();
-                    break;
+            //Reading the array to see if this is one o the 5 first times the user play the game
+            for (int i = 0; i < scores.size(); i++) {
+                if (scores.get(i).name == null) {
+                    hasNull = true;
+                } else {
+                    hasNull = false;
                 }
             }
-            if(!newRecord){
-                getScores();
+            if (hasNull) {
+                //At least, there ir a null score in the array
+                newScore();
+            } else {
+                //There is no one null score in the array
+                //If the game score is higher than one of the array, show the dialog
+                for (int i = 0; i < scores.size(); i++) {
+                    if (gameScore >= scores.get(i).points) {
+                        newRecord = true;
+                        newScore();
+                        break;
+                    }
+                }
+                if (!newRecord) {
+                    getScores();
+                }
             }
         }
 

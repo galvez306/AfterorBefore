@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">AfterOrBefore</string>
+
+    <string name="iniciar">START</string>
+
+    <string name="bienvenida">Which picture was taken before or after?</string>
+    <string name="antes">BEFORE</string>
+    <string name="despues">AFTER</string>
+    <string name="seleccionar_bandera">Where was this picture taken?</string>
+    <string name="reinicio">Game restarted</string>
+
+    <string name="marcador">SCORES</string>
+    <string name="nombre_puntaje">NAME</string>
+    <string name="nombre_vacio">Name can not be empty</string>
+    <string name="nombre_largo">Name too large</string>
+
+</resources>

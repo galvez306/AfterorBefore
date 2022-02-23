@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -44,6 +45,8 @@ public class GameActivity extends AppCompatActivity implements GameView, Picture
 
     TextView tv_question;
 
+    private MediaPlayer sound;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +79,16 @@ public class GameActivity extends AppCompatActivity implements GameView, Picture
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fl_picture_a,pictureFragmentA).replace(R.id.fl_picture_b,pictureFragmentB).replace(R.id.fl_glock,glockFragment).commit();
 
+    }
+
+    @Override
+    public void playSound(String sound) {
+        if(sound.equals("correct")){
+            this.sound = MediaPlayer.create(this,R.raw.correcto);
+        }else{
+            this.sound = MediaPlayer.create(this,R.raw.incorrecto);
+        }
+        this.sound.start();
     }
 
     //this method is called by each fragment by a interface and here its implemented
@@ -137,6 +150,7 @@ public class GameActivity extends AppCompatActivity implements GameView, Picture
 
     @Override
     public void tiempoTermino() {
+        playSound("incorrect");
         gamePresenter.finishGame(0);
     }
     //ActivityLifeCycle

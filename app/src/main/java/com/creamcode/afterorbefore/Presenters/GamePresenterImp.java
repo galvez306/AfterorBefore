@@ -191,6 +191,7 @@ public class GamePresenterImp implements GamePresenter {
         if(arrayPictures.isEmpty()){
             finishGame(points);
         }else {
+            gameView.playSound("correct");
             gameView.changeTime("Photo");
             gameView.loadNextPicture(pictureFragment, arrayPictures.get(0).toString());
             arrayPictures.remove(0);
@@ -201,6 +202,7 @@ public class GamePresenterImp implements GamePresenter {
 
     @Override
     public void showInfo(PictureFragment pictureFragment) {
+        gameView.playSound("incorrect");
         gameView.killTime();
         pictureFragment.infoPictureVisibility();
         new CountDownTimer(2000, 1000) {

@@ -23,7 +23,7 @@ public class GlockFragment extends Fragment {
     private Timer timer = new Timer();
     TimerTask tarea;
 
-    private final static int RESET_PHOTO = 20;
+    private final static int RESET_PHOTO = 15;
     private final static int RESET_FLAGS = 10;
 
     private int time = RESET_PHOTO;

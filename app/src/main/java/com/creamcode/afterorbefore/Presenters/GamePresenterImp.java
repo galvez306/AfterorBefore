@@ -1,11 +1,10 @@
 package com.creamcode.afterorbefore.Presenters;
 
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.CountDownTimer;
-import android.widget.Toast;
 
-import androidx.fragment.app.Fragment;
 
 import com.creamcode.afterorbefore.Interactors.GameInteractorImp;
 import com.creamcode.afterorbefore.Interfaces.GameInteractor;
@@ -15,7 +14,6 @@ import com.creamcode.afterorbefore.ResultAcivity;
 import com.creamcode.afterorbefore.Views.PictureFragment;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class GamePresenterImp implements GamePresenter {
 
@@ -189,7 +187,7 @@ public class GamePresenterImp implements GamePresenter {
     public void nextPicture(PictureFragment pictureFragment) {
         points++;
         if(arrayPictures.isEmpty()){
-            finishGame(points);
+            finishGame();
         }else {
             gameView.playSound("correct");
             gameView.changeTime("Photo");
@@ -207,7 +205,7 @@ public class GamePresenterImp implements GamePresenter {
         pictureFragment.infoPictureVisibility();
         new CountDownTimer(2000, 1000) {
             public void onFinish() {
-                finishGame(points);
+                gameView.loadAd();
             }
             public void onTick(long millisUntilFinished) {
             }
@@ -217,7 +215,7 @@ public class GamePresenterImp implements GamePresenter {
 
 
     @Override
-    public void finishGame(int aciertos) {
+    public void finishGame() {
         Intent intent = new Intent((Context) gameView, ResultAcivity.class);
         intent.putExtra("SCORE",points);
         ((Context) gameView).startActivity(intent);

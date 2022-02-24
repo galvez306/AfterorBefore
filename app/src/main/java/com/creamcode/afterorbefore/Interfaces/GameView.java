@@ -11,4 +11,5 @@ public interface GameView {
     void loadQuestion(String question);
     void changeTime(String timeType);
     void killTime();
+    void loadAd();
 }

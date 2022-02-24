@@ -2,20 +2,16 @@ package com.creamcode.afterorbefore;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.os.Handler;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.FrameLayout;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,18 +20,15 @@ import com.creamcode.afterorbefore.Interfaces.GameView;
 import com.creamcode.afterorbefore.Presenters.GamePresenterImp;
 import com.creamcode.afterorbefore.Views.GlockFragment;
 import com.creamcode.afterorbefore.Views.PictureFragment;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 
 public class GameActivity extends AppCompatActivity implements GameView, PictureFragment.PictureFragmentInterface, GlockFragment.GlockInterface {
 
@@ -46,6 +39,7 @@ public class GameActivity extends AppCompatActivity implements GameView, Picture
     TextView tv_question;
 
     private MediaPlayer sound;
+    private InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +52,41 @@ public class GameActivity extends AppCompatActivity implements GameView, Picture
         gamePresenter = new GamePresenterImp(this);
         gamePresenter.getIds();
 
+        //Initializing ad
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        AdRequest adRequest = new AdRequest.Builder().build();
+        InterstitialAd.load((Context) this,"ca-app-pub-6105806325055299/6822608819", adRequest,
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                        mInterstitialAd = interstitialAd;
+                        mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback(){
+                            @Override
+                            public void onAdDismissedFullScreenContent() {
+                                gamePresenter.finishGame();
+                            }
+
+                            @Override
+                            public void onAdFailedToShowFullScreenContent(AdError adError) {
+                                mInterstitialAd = null;
+                            }
+
+                            @Override
+                            public void onAdShowedFullScreenContent() {
+                                mInterstitialAd = null;
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        mInterstitialAd = null;
+                    }
+                });
 
     }
 
@@ -135,6 +164,15 @@ public class GameActivity extends AppCompatActivity implements GameView, Picture
         glockFragment.cancelTimer();
     }
 
+    @Override
+    public void loadAd() {
+        if (mInterstitialAd != null) {
+            mInterstitialAd.show(GameActivity.this);
+        } else {
+            gamePresenter.finishGame();
+        }
+    }
+
 
     public void FullScreencall() {
         if(Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) { // lower api
@@ -151,7 +189,7 @@ public class GameActivity extends AppCompatActivity implements GameView, Picture
     @Override
     public void tiempoTermino() {
         playSound("incorrect");
-        gamePresenter.finishGame(0);
+        gamePresenter.finishGame();
     }
     //ActivityLifeCycle
     @Override

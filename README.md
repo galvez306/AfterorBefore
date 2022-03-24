@@ -14,4 +14,7 @@ This is not a final version, it has a few photos to interact and see the perform
 
 Demo:
 
-![device-2022-03-24-113105](https://user-images.githubusercontent.com/93736539/159976481-2a7518f3-2d17-449a-bf4f-5436e6e56589.gif)
+![device-2022-02-23-182300](https://user-images.githubusercontent.com/93736539/159977218-c6efe4b4-7df6-4bdc-905b-25a970040011.png)
+![device-2022-02-23-182311](https://user-images.githubusercontent.com/93736539/159977194-082c1b85-1981-4812-a89c-206057a94b6e.png)
+![Sin título(3)](https://user-images.githubusercontent.com/93736539/159977215-404d6b1a-410c-41a8-93dd-195a78b84390.png)
+
